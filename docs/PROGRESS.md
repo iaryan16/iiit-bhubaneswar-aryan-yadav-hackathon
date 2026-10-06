@@ -31,3 +31,10 @@
 - Defined OpenAPI 3.0 spec in `docs/openapi.json` and Java `RiskSignal` / `EventType` domain model.
 - Created `docker-compose.yml` with backend, nlp-service, frontend, health checks, and network bridge.
 - Configured CORS for frontend interaction and verified `/health` endpoint and test suite with `mvn test`.
+
+### Phase 2A Log
+- Built Python FastAPI NLP Sidecar service with `/analyze`, `/analyze/batch`, and `/health`.
+- Implemented FinBERT sentiment scoring logic with bounded [-1.0, 1.0] scale.
+- Implemented hybrid risk event classification with rule layer + zero-shot taxonomy and entity NER.
+- Verified test suite (`test_nlp.py`): Achieved 95.0% classification accuracy on 20 labeled benchmark headlines and confirmed polarity bounds.
+- Added containerization `nlp-service/Dockerfile` and `requirements.txt`.
