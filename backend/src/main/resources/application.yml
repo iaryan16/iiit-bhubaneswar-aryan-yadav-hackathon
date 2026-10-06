@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: risk-stress-engine
+  datasource:
+    url: jdbc:h2:mem:riskdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  flyway:
+    enabled: false # JPA auto-manages demo entities, Flyway script provided in db/migration
+  task:
+    scheduling:
+      pool:
+        size: 4
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+app:
+  nlp:
+    service-url: ${NLP_SERVICE_URL:http://localhost:8000}
+    timeout-ms: ${NLP_SERVICE_TIMEOUT_MS:3000}
+  stress:
+    impact-threshold: ${STRESS_IMPACT_THRESHOLD:7}
+    confidence-threshold: ${STRESS_CONFIDENCE_THRESHOLD:0.5}
+    debounce-minutes: ${STRESS_DEBOUNCE_MINUTES:30}
+  ingestion:
+    gdelt-enabled: ${GDELT_ENABLED:true}
+    schedule-cron: "0 */15 * * * *" # Every 15 minutes
+    offline-mode: true

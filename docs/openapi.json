@@ -1,0 +1,347 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Risk Stress Testing Platform API",
+    "description": "Event-driven financial stress testing API powered by real-time NLP signal intelligence.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Spring Boot Backend"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Check backend health status",
+        "responses": {
+          "200": {
+            "description": "System is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/signals": {
+      "get": {
+        "summary": "Get filtered risk signals",
+        "parameters": [
+          {
+            "name": "minImpact",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            }
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of risk signals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RiskSignal"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/signals/stream": {
+      "get": {
+        "summary": "Server-Sent Events stream for live risk signals",
+        "responses": {
+          "200": {
+            "description": "Real-time risk signal SSE stream",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskSignal"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analyze": {
+      "post": {
+        "summary": "Analyze raw headline/text on-demand",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Processed risk signal",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskSignal"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/portfolio/summary": {
+      "get": {
+        "summary": "Get current portfolio summary and breakdown",
+        "responses": {
+          "200": {
+            "description": "Portfolio summary with asset class metrics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioSummary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stress/results": {
+      "get": {
+        "summary": "Retrieve historical stress test run results",
+        "responses": {
+          "200": {
+            "description": "List of executed stress test results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StressResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stress/run": {
+      "post": {
+        "summary": "Manually trigger or replay a stress scenario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualStressRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Completed stress test revaluation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StressResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/config/threshold": {
+      "get": {
+        "summary": "Get current trigger threshold configuration",
+        "responses": {
+          "200": {
+            "description": "Current threshold config",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThresholdConfig"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update dynamic trigger threshold",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThresholdConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated threshold config",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThresholdConfig"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EventType": {
+        "type": "string",
+        "enum": [
+          "GEOPOLITICAL",
+          "MACROECONOMIC",
+          "CREDIT_EVENT",
+          "MERGER_ACQUISITION",
+          "PRODUCT_LAUNCH",
+          "REGULATORY",
+          "NATURAL_DISASTER_OPERATIONAL",
+          "OTHER"
+        ]
+      },
+      "RiskSignal": {
+        "type": "object",
+        "required": [
+          "signalId",
+          "timestamp",
+          "source",
+          "headline",
+          "sentimentScore",
+          "eventType",
+          "eventConfidence",
+          "impactScore"
+        ],
+        "properties": {
+          "signalId": { "type": "string", "format": "uuid" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "source": { "type": "string", "enum": ["GDELT", "NEWSAPI", "TWEET_CSV", "MANUAL"] },
+          "headline": { "type": "string" },
+          "snippet": { "type": "string" },
+          "entities": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "tickers": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "region": { "type": "string" },
+          "sector": { "type": "string" },
+          "sentimentScore": { "type": "number", "minimum": -1.0, "maximum": 1.0 },
+          "eventType": { "$ref": "#/components/schemas/EventType" },
+          "eventConfidence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "impactScore": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "impactRationale": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "AnalyzeRequest": {
+        "type": "object",
+        "required": ["text"],
+        "properties": {
+          "text": { "type": "string" },
+          "source": { "type": "string", "default": "MANUAL" }
+        }
+      },
+      "ManualStressRequest": {
+        "type": "object",
+        "required": ["eventType", "impactScore"],
+        "properties": {
+          "eventType": { "$ref": "#/components/schemas/EventType" },
+          "impactScore": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "headline": { "type": "string" }
+        }
+      },
+      "PortfolioSummary": {
+        "type": "object",
+        "properties": {
+          "totalPositions": { "type": "integer" },
+          "totalMarketValue": { "type": "number" },
+          "totalNotional": { "type": "number" },
+          "totalExpectedLoss": { "type": "number" },
+          "byAssetClass": { "type": "object", "additionalProperties": { "type": "number" } },
+          "bySector": { "type": "object", "additionalProperties": { "type": "number" } },
+          "byRegion": { "type": "object", "additionalProperties": { "type": "number" } }
+        }
+      },
+      "StressResult": {
+        "type": "object",
+        "properties": {
+          "resultId": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "triggerSignalId": { "type": "string" },
+          "eventType": { "$ref": "#/components/schemas/EventType" },
+          "impactScore": { "type": "integer" },
+          "portfolioValueBefore": { "type": "number" },
+          "portfolioValueAfter": { "type": "number" },
+          "deltaValue": { "type": "number" },
+          "deltaPercentage": { "type": "number" },
+          "expectedLossBefore": { "type": "number" },
+          "expectedLossAfter": { "type": "number" },
+          "breakdownByAssetClass": { "type": "object" },
+          "breakdownBySector": { "type": "object" },
+          "breakdownByRegion": { "type": "object" },
+          "topLossPositions": { "type": "array", "items": { "type": "object" } },
+          "appliedShocks": { "type": "object" }
+        }
+      },
+      "ThresholdConfig": {
+        "type": "object",
+        "properties": {
+          "impactThreshold": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "confidenceThreshold": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+          "debounceMinutes": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "HealthStatus": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "example": "UP" },
+          "service": { "type": "string", "example": "risk-stress-engine" },
+          "nlpSidecar": { "type": "string", "example": "ONLINE" },
+          "timestamp": { "type": "string" }
+        }
+      }
+    }
+  }
+}

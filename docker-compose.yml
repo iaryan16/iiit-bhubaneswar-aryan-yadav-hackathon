@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  nlp-service:
+    build:
+      context: ./nlp-service
+      dockerfile: Dockerfile
+    container_name: risk-nlp-sidecar
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: risk-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - NLP_SERVICE_URL=http://nlp-service:8000
+      - NLP_SERVICE_TIMEOUT_MS=3000
+      - STRESS_IMPACT_THRESHOLD=7
+      - STRESS_CONFIDENCE_THRESHOLD=0.5
+      - STRESS_DEBOUNCE_MINUTES=30
+    depends_on:
+      nlp-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: risk-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8080
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  default:
+    name: risk-network
