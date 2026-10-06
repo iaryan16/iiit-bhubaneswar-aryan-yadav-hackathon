@@ -1,0 +1,49 @@
+type,entity,ticker,sector,region
+COMPANY,Apple,AAPL,Technology,North America
+COMPANY,Microsoft,MSFT,Technology,North America
+COMPANY,Alphabet,GOOGL,Technology,North America
+COMPANY,Amazon,AMZN,Consumer Discretionary,North America
+COMPANY,Tesla,TSLA,Consumer Discretionary,North America
+COMPANY,Nvidia,NVDA,Technology,North America
+COMPANY,Meta,META,Technology,North America
+COMPANY,JPMorgan,JPM,Financials,North America
+COMPANY,Goldman Sachs,GS,Financials,North America
+COMPANY,Morgan Stanley,MS,Financials,North America
+COMPANY,Citigroup,C,Financials,North America
+COMPANY,Bank of America,BAC,Financials,North America
+COMPANY,Barclays,BARC,Financials,Europe
+COMPANY,HSBC,HSBC,Financials,Europe
+COMPANY,Deutsche Bank,DB,Financials,Europe
+COMPANY,UBS,UBSG,Financials,Europe
+COMPANY,BNP Paribas,BNP,Financials,Europe
+COMPANY,ExxonMobil,XOM,Energy,North America
+COMPANY,Chevron,CVX,Energy,North America
+COMPANY,Shell,SHEL,Energy,Europe
+COMPANY,BP,BP,Energy,Europe
+COMPANY,TotalEnergies,TTE,Energy,Europe
+COMPANY,Boeing,BA,Industrials,North America
+COMPANY,Airbus,AIR,Industrials,Europe
+COMPANY,Lockheed Martin,LMT,Industrials,North America
+COMPANY,Pfizer,PFE,Healthcare,North America
+COMPANY,Moderna,MRNA,Healthcare,North America
+COMPANY,Johnson & Johnson,JNJ,Healthcare,North America
+COMPANY,Roche,ROG,Healthcare,Europe
+COMPANY,Novartis,NOVN,Healthcare,Europe
+COMPANY,Tata Motors,TTM,Consumer Discretionary,Asia
+COMPANY,Reliance,RELI,Energy,Asia
+COMPANY,HDFC Bank,HDB,Financials,Asia
+COMPANY,Infosys,INFY,Technology,Asia
+COUNTRY,United States,SPY,Sovereign,North America
+COUNTRY,US,SPY,Sovereign,North America
+COUNTRY,China,FXI,Sovereign,Asia
+COUNTRY,Russia,RSX,Sovereign,Emerging Markets
+COUNTRY,Ukraine,ERUS,Sovereign,Emerging Markets
+COUNTRY,Taiwan,EWT,Sovereign,Asia
+COUNTRY,Germany,EWG,Sovereign,Europe
+COUNTRY,United Kingdom,EWU,Sovereign,Europe
+COUNTRY,UK,EWU,Sovereign,Europe
+COUNTRY,Japan,EWJ,Sovereign,Asia
+COUNTRY,India,INDA,Sovereign,Asia
+COUNTRY,France,EWQ,Sovereign,Europe
+COUNTRY,European Union,VGK,Sovereign,Europe
+COUNTRY,EU,VGK,Sovereign,Europe
