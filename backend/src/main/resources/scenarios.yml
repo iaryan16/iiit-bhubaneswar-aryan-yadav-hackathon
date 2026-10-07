@@ -1,0 +1,94 @@
+scenarios:
+  GEOPOLITICAL:
+    equityShockPct: -12.0
+    rateShockBp: -50.0
+    creditSpreadBp: 150.0
+    fxShocks:
+      USDEUR: 3.0
+      USDINR: 4.0
+      USDGBP: 2.5
+      USDJPY: -2.0
+    sectorOverrides:
+      Energy:
+        equityShockPct: 5.0
+      Airlines:
+        equityShockPct: -20.0
+      Industrials:
+        equityShockPct: -15.0
+    pdMultiplier: 1.4
+
+  MACROECONOMIC:
+    equityShockPct: -8.0
+    rateShockBp: 200.0
+    creditSpreadBp: 100.0
+    fxShocks:
+      USDEUR: 2.0
+      USDINR: 3.0
+    sectorOverrides:
+      Financials:
+        equityShockPct: -4.0
+      Technology:
+        equityShockPct: -14.0
+    pdMultiplier: 1.25
+
+  CREDIT_EVENT:
+    equityShockPct: -10.0
+    rateShockBp: -25.0
+    creditSpreadBp: 250.0
+    fxShocks:
+      USDEUR: 1.5
+    sectorOverrides:
+      Financials:
+        equityShockPct: -18.0
+    pdMultiplier: 2.0
+    counterpartySpecific: true
+
+  NATURAL_DISASTER_OPERATIONAL:
+    equityShockPct: -6.0
+    rateShockBp: -15.0
+    creditSpreadBp: 80.0
+    fxShocks: {}
+    sectorOverrides:
+      Energy:
+        equityShockPct: -12.0
+      Utilities:
+        equityShockPct: -10.0
+    pdMultiplier: 1.2
+
+  REGULATORY:
+    equityShockPct: -5.0
+    rateShockBp: 0.0
+    creditSpreadBp: 40.0
+    fxShocks: {}
+    sectorOverrides:
+      Technology:
+        equityShockPct: -10.0
+      Financials:
+        equityShockPct: -8.0
+    pdMultiplier: 1.1
+
+  PRODUCT_LAUNCH:
+    equityShockPct: 4.0
+    rateShockBp: 0.0
+    creditSpreadBp: -10.0
+    fxShocks: {}
+    sectorOverrides:
+      Technology:
+        equityShockPct: 8.0
+    pdMultiplier: 0.95
+
+  MERGER_ACQUISITION:
+    equityShockPct: 0.0
+    rateShockBp: 0.0
+    creditSpreadBp: 0.0
+    fxShocks: {}
+    sectorOverrides: {}
+    pdMultiplier: 1.0
+
+  OTHER:
+    equityShockPct: -2.0
+    rateShockBp: 0.0
+    creditSpreadBp: 20.0
+    fxShocks: {}
+    sectorOverrides: {}
+    pdMultiplier: 1.05

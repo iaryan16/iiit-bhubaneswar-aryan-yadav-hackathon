@@ -13,9 +13,9 @@
 | **Phase 0** | Rules, Setup, Contracts & Progress Tracker | Completed | ~1.5 hours | `da6ca34` (docs(phase0): initialize repository with project rules, specs, and progress tracking) |
 | **Phase 1** | Scaffolding, Contracts & Orchestration | Completed | ~3.5 hours | `def1bda` (feat(phase1): scaffold Spring Boot backend, Vite React frontend, and OpenAPI contracts) |
 | **Phase 2** | NLP Risk Engine (Sidecar + Spring Ingestion + Heuristic Fallback) | Completed | ~4.5 hours | `860d9ef` (feat(phase2-ingest): add multi-source ingestion, Java fallback analyzer, impact scorer, and signal streaming) |
-| **Phase 3** | Synthetic Portfolio Generator & Market Data Caching | Completed | ~3.5 hours | Pending |
-| **Phase 4** | Financial Stress Testing Engine & Revaluator Strategies | In Progress | ~5.5 hours | Pending |
-| **Phase 5** | Interactive Financial Dashboard & Real-Time SSE Streams | Planned | ~5.0 hours | Pending |
+| **Phase 3** | Synthetic Portfolio Generator & Market Data Caching | Completed | ~3.5 hours | `72f94b5` (feat(phase3): generate multi-asset synthetic portfolio and startup loader with market caching) |
+| **Phase 4** | Financial Stress Testing Engine & Revaluator Strategies | Completed | ~5.5 hours | Pending |
+| **Phase 5** | Interactive Financial Dashboard & Real-Time SSE Streams | In Progress | ~5.0 hours | Pending |
 | **Phase 6** | Packaging, Architecture Diagrams & Submission Assets | Planned | ~3.0 hours | Pending |
 
 ---
@@ -55,3 +55,15 @@
 - Created JPA `Position` entity, repository, and `PortfolioDataLoader` startup runner.
 - Built `PortfolioService` with baseline Expected Loss calculation and dimensional slice aggregations (`/api/portfolio/summary`, `/api/portfolio/positions`).
 - Verified portfolio composition and valuation bounds via `PortfolioTests.java`.
+
+### Phase 4 Log
+- Built `scenarios.yml` scenario library (GEOPOLITICAL, MACROECONOMIC, CREDIT_EVENT, MERGER_ACQUISITION, REGULATORY, NATURAL_DISASTER_OPERATIONAL, PRODUCT_LAUNCH).
+- Implemented Severity Scaling formula `appliedShock = baseShock * min(impact / 8.0, 1.5)`.
+- Implemented multi-asset Revaluator strategy pattern:
+  - `BondRevaluator`: `ΔP/P = -D·Δy + 1/2·C·Δy² - D·Δspread`
+  - `LoanRevaluator`: `ΔMTM = -duration·Δspread·V` + `PD·LGD·EAD` migration
+  - `DerivativeRevaluator`: `ΔMTM = DV01·Δrate` (IR swaps) & `notional·Δfx·delta` (FX forwards)
+  - `EquityRevaluator`: `V·shock·beta` with sector overrides (e.g. Energy +5%, Airlines -20%)
+- Developed `TriggerService` with runtime thresholding (`impact > 7`, `confidence > 0.5`) and 30-minute debouncing.
+- Implemented `StressService` computing multi-dimensional breakdowns, top 10 impacted positions, and SSE broadcasting (`/api/stress/stream`, `/api/stress/results`, `/api/stress/run`).
+- Verified with unit tests in `StressEngineTests.java`: Passed hand-calculated revaluator validations, monotonicity scaling test, and E2E geopolitical impact 9 shock ($134.5M loss on $1.76B portfolio).
