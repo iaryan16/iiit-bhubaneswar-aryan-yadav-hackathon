@@ -1,0 +1,21 @@
+ticker,company,sector,price,beta
+AAPL,Apple Inc.,Technology,185.50,1.15
+MSFT,Microsoft Corp.,Technology,420.25,1.05
+GOOGL,Alphabet Inc.,Technology,165.80,1.10
+AMZN,Amazon.com Inc.,Consumer Discretionary,180.40,1.25
+TSLA,Tesla Inc.,Consumer Discretionary,240.50,2.10
+NVDA,Nvidia Corp.,Technology,125.60,1.85
+META,Meta Platforms,Technology,505.20,1.35
+JPM,JPMorgan Chase,Financials,198.40,1.08
+GS,Goldman Sachs,Financials,465.10,1.20
+MS,Morgan Stanley,Financials,98.70,1.18
+C,Citigroup Inc.,Financials,62.30,1.32
+BAC,Bank of America,Financials,39.80,1.22
+XOM,Exxon Mobil,Energy,118.50,0.85
+CVX,Chevron Corp.,Energy,155.20,0.88
+SHEL,Shell plc,Energy,68.40,0.78
+BP,BP plc,Energy,35.60,0.82
+BA,Boeing Co.,Industrials,182.30,1.40
+LMT,Lockheed Martin,Industrials,460.80,0.55
+PFE,Pfizer Inc.,Healthcare,28.50,0.62
+JNJ,Johnson & Johnson,Healthcare,156.40,0.54

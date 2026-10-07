@@ -1,0 +1,201 @@
+positionId,assetClass,counterparty,sector,region,currency,notional,marketValue,coupon,modifiedDuration,convexity,rating,rateType,pd,lgd,dv01,payReceive,currencyPair,delta,ticker,shares,price,beta
+EQ-1001,EQUITY,Amazon.com Inc.,Consumer Discretionary,North America,USD,3001675.6,3001675.6,,,,,,,,,,,,AMZN,16639,180.4,1.25
+EQ-1002,EQUITY,Goldman Sachs,Financials,North America,USD,14440889.9,14440889.9,,,,,,,,,,,,GS,31049,465.1,1.2
+EQ-1003,EQUITY,JPMorgan Chase,Financials,North America,USD,4790169.6,4790169.6,,,,,,,,,,,,JPM,24144,198.4,1.08
+EQ-1004,EQUITY,Amazon.com Inc.,Consumer Discretionary,North America,USD,10706379.2,10706379.2,,,,,,,,,,,,AMZN,59348,180.4,1.25
+EQ-1005,EQUITY,Lockheed Martin,Industrials,North America,USD,9537177.6,9537177.6,,,,,,,,,,,,LMT,20697,460.8,0.55
+EQ-1006,EQUITY,Pfizer Inc.,Healthcare,North America,USD,1215553.5,1215553.5,,,,,,,,,,,,PFE,42651,28.5,0.62
+EQ-1007,EQUITY,Microsoft Corp.,Technology,North America,USD,7124078.0,7124078.0,,,,,,,,,,,,MSFT,16952,420.25,1.05
+EQ-1008,EQUITY,Alphabet Inc.,Technology,North America,USD,4862582.4,4862582.4,,,,,,,,,,,,GOOGL,29328,165.8,1.1
+EQ-1009,EQUITY,JPMorgan Chase,Financials,North America,USD,9546611.2,9546611.2,,,,,,,,,,,,JPM,48118,198.4,1.08
+EQ-1010,EQUITY,Johnson & Johnson,Healthcare,North America,USD,2617979.6,2617979.6,,,,,,,,,,,,JNJ,16739,156.4,0.54
+EQ-1011,EQUITY,Lockheed Martin,Industrials,North America,USD,12916684.8,12916684.8,,,,,,,,,,,,LMT,28031,460.8,0.55
+EQ-1012,EQUITY,Lockheed Martin,Industrials,North America,USD,19580774.4,19580774.4,,,,,,,,,,,,LMT,42493,460.8,0.55
+EQ-1013,EQUITY,JPMorgan Chase,Financials,North America,USD,8816697.6,8816697.6,,,,,,,,,,,,JPM,44439,198.4,1.08
+EQ-1014,EQUITY,Pfizer Inc.,Healthcare,North America,USD,947083.5,947083.5,,,,,,,,,,,,PFE,33231,28.5,0.62
+EQ-1015,EQUITY,Apple Inc.,Technology,North America,USD,4723386.5,4723386.5,,,,,,,,,,,,AAPL,25463,185.5,1.15
+EQ-1016,EQUITY,Chevron Corp.,Energy,North America,USD,5788649.6,5788649.6,,,,,,,,,,,,CVX,37298,155.2,0.88
+EQ-1017,EQUITY,Goldman Sachs,Financials,North America,USD,11715403.9,11715403.9,,,,,,,,,,,,GS,25189,465.1,1.2
+EQ-1018,EQUITY,Meta Platforms,Technology,North America,USD,18722206.8,18722206.8,,,,,,,,,,,,META,37059,505.2,1.35
+EQ-1019,EQUITY,Amazon.com Inc.,Consumer Discretionary,North America,USD,3802471.2,3802471.2,,,,,,,,,,,,AMZN,21078,180.4,1.25
+EQ-1020,EQUITY,Exxon Mobil,Energy,North America,USD,2528553.0,2528553.0,,,,,,,,,,,,XOM,21338,118.5,0.85
+EQ-1021,EQUITY,Bank of America,Financials,North America,USD,1494131.8,1494131.8,,,,,,,,,,,,BAC,37541,39.8,1.22
+EQ-1022,EQUITY,Johnson & Johnson,Healthcare,North America,USD,5057194.0,5057194.0,,,,,,,,,,,,JNJ,32335,156.4,0.54
+EQ-1023,EQUITY,Microsoft Corp.,Technology,North America,USD,18956637.0,18956637.0,,,,,,,,,,,,MSFT,45108,420.25,1.05
+EQ-1024,EQUITY,Lockheed Martin,Industrials,North America,USD,10681344.0,10681344.0,,,,,,,,,,,,LMT,23180,460.8,0.55
+EQ-1025,EQUITY,Exxon Mobil,Energy,North America,USD,2389434.0,2389434.0,,,,,,,,,,,,XOM,20164,118.5,0.85
+EQ-1026,EQUITY,Lockheed Martin,Industrials,North America,USD,15765350.4,15765350.4,,,,,,,,,,,,LMT,34213,460.8,0.55
+EQ-1027,EQUITY,Johnson & Johnson,Healthcare,North America,USD,6052680.0,6052680.0,,,,,,,,,,,,JNJ,38700,156.4,0.54
+EQ-1028,EQUITY,Pfizer Inc.,Healthcare,North America,USD,786628.5,786628.5,,,,,,,,,,,,PFE,27601,28.5,0.62
+EQ-1029,EQUITY,Alphabet Inc.,Technology,North America,USD,2984897.4,2984897.4,,,,,,,,,,,,GOOGL,18003,165.8,1.1
+EQ-1030,EQUITY,JPMorgan Chase,Financials,North America,USD,6738656.0,6738656.0,,,,,,,,,,,,JPM,33965,198.4,1.08
+EQ-1031,EQUITY,Alphabet Inc.,Technology,North America,USD,5016444.8,5016444.8,,,,,,,,,,,,GOOGL,30256,165.8,1.1
+EQ-1032,EQUITY,Amazon.com Inc.,Consumer Discretionary,North America,USD,7199944.4,7199944.4,,,,,,,,,,,,AMZN,39911,180.4,1.25
+EQ-1033,EQUITY,Goldman Sachs,Financials,North America,USD,20796481.4,20796481.4,,,,,,,,,,,,GS,44714,465.1,1.2
+EQ-1034,EQUITY,Bank of America,Financials,North America,USD,1021228.2,1021228.2,,,,,,,,,,,,BAC,25659,39.8,1.22
+EQ-1035,EQUITY,Bank of America,Financials,North America,USD,1523663.4,1523663.4,,,,,,,,,,,,BAC,38283,39.8,1.22
+EQ-1036,EQUITY,Meta Platforms,Technology,North America,USD,29766384.0,29766384.0,,,,,,,,,,,,META,58920,505.2,1.35
+EQ-1037,EQUITY,Goldman Sachs,Financials,North America,USD,27811119.6,27811119.6,,,,,,,,,,,,GS,59796,465.1,1.2
+EQ-1038,EQUITY,Alphabet Inc.,Technology,North America,USD,9105736.0,9105736.0,,,,,,,,,,,,GOOGL,54920,165.8,1.1
+EQ-1039,EQUITY,Nvidia Corp.,Technology,North America,USD,6280628.0,6280628.0,,,,,,,,,,,,NVDA,50005,125.6,1.85
+EQ-1040,EQUITY,JPMorgan Chase,Financials,North America,USD,5100467.2,5100467.2,,,,,,,,,,,,JPM,25708,198.4,1.08
+EQ-1041,EQUITY,Shell plc,Energy,Europe,USD,2726902.8,2726902.8,,,,,,,,,,,,SHEL,39867,68.4,0.78
+EQ-1042,EQUITY,Goldman Sachs,Financials,North America,USD,26484189.3,26484189.3,,,,,,,,,,,,GS,56943,465.1,1.2
+EQ-1043,EQUITY,Lockheed Martin,Industrials,North America,USD,13543833.6,13543833.6,,,,,,,,,,,,LMT,29392,460.8,0.55
+EQ-1044,EQUITY,Citigroup Inc.,Financials,North America,USD,1162829.5,1162829.5,,,,,,,,,,,,C,18665,62.3,1.32
+EQ-1045,EQUITY,JPMorgan Chase,Financials,North America,USD,3393235.2,3393235.2,,,,,,,,,,,,JPM,17103,198.4,1.08
+EQ-1046,EQUITY,Citigroup Inc.,Financials,North America,USD,2572367.0,2572367.0,,,,,,,,,,,,C,41290,62.3,1.32
+EQ-1047,EQUITY,Goldman Sachs,Financials,North America,USD,8993638.7,8993638.7,,,,,,,,,,,,GS,19337,465.1,1.2
+EQ-1048,EQUITY,Meta Platforms,Technology,North America,USD,26356284.0,26356284.0,,,,,,,,,,,,META,52170,505.2,1.35
+EQ-1049,EQUITY,Citigroup Inc.,Financials,North America,USD,1802588.2,1802588.2,,,,,,,,,,,,C,28934,62.3,1.32
+EQ-1050,EQUITY,BP plc,Energy,Europe,USD,1457036.8,1457036.8,,,,,,,,,,,,BP,40928,35.6,0.82
+BND-1051,BOND,TotalEnergies SE,Financials,Asia,USD,17000000,17035700.0,4.18,7.01,78.87,AA,FIXED,,,,,,,,,100.21,
+BND-1052,BOND,Siemens AG,Energy,Europe,USD,13000000,12568400.0,3.21,4.16,62.65,BB,FIXED,,,,,,,,,96.68,
+BND-1053,BOND,Airbus SE,Industrials,North America,EUR,15000000,15520500.0,5.38,9.33,76.65,BBB,FIXED,,,,,,,,,103.47,
+BND-1054,BOND,Barclays Bank,Consumer Discretionary,North America,GBP,18000000,17640000.0,5.88,4.17,51.09,BB,FIXED,,,,,,,,,98.0,
+BND-1055,BOND,TotalEnergies SE,Technology,Asia,GBP,14000000,14397600.0,6.92,5.29,63.34,AA,FIXED,,,,,,,,,102.84,
+BND-1056,BOND,BHP Group,Financials,Europe,EUR,14000000,14441000.0,7.15,9.01,60.94,AA,FIXED,,,,,,,,,103.15,
+BND-1057,BOND,Rio Tinto,Technology,North America,EUR,9000000,8678700.0,6.95,9.18,30.14,A,FIXED,,,,,,,,,96.43,
+BND-1058,BOND,Rio Tinto,Utilities,North America,GBP,8000000,8076000.0,7.26,4.49,56.66,AA,FIXED,,,,,,,,,100.95,
+BND-1059,BOND,BHP Group,Healthcare,Europe,GBP,17000000,16576700.0,4.4,9.47,63.99,B,FIXED,,,,,,,,,97.51,
+BND-1060,BOND,TotalEnergies SE,Industrials,Emerging Markets,USD,9000000,8683200.0,3.09,6.82,60.31,AA,FIXED,,,,,,,,,96.48,
+BND-1061,BOND,Barclays Bank,Technology,North America,USD,6000000,6147000.0,3.32,4.93,65.14,AAA,FIXED,,,,,,,,,102.45,
+BND-1062,BOND,Credit Agricole,Industrials,Europe,GBP,15000000,14932500.0,6.53,8.34,36.42,BB,FIXED,,,,,,,,,99.55,
+BND-1063,BOND,HSBC Holdings,Consumer Discretionary,Emerging Markets,EUR,12000000,11940000.0,6.28,7.54,84.05,BBB,FIXED,,,,,,,,,99.5,
+BND-1064,BOND,HSBC Holdings,Technology,Emerging Markets,GBP,18000000,18442800.0,4.12,4.64,51.92,A,FIXED,,,,,,,,,102.46,
+BND-1065,BOND,Airbus SE,Financials,Asia,EUR,7000000,6952400.0,6.88,6.8,28.04,AA,FIXED,,,,,,,,,99.32,
+BND-1066,BOND,Enel SpA,Utilities,North America,USD,8000000,7924000.0,5.17,8.69,79.15,AA,FIXED,,,,,,,,,99.05,
+BND-1067,BOND,UBS AG,Healthcare,North America,EUR,18000000,18340200.0,4.28,7.68,68.83,A,FIXED,,,,,,,,,101.89,
+BND-1068,BOND,Enel SpA,Consumer Discretionary,Emerging Markets,USD,10000000,9763000.0,3.26,7.91,28.66,AA,FIXED,,,,,,,,,97.63,
+BND-1069,BOND,Tata Steel,Technology,North America,GBP,14000000,14406000.0,5.39,3.84,55.47,BBB,FIXED,,,,,,,,,102.9,
+BND-1070,BOND,UBS AG,Technology,North America,GBP,12000000,11628000.0,7.01,4.98,60.67,AA,FIXED,,,,,,,,,96.9,
+BND-1071,BOND,BHP Group,Technology,Emerging Markets,GBP,15000000,14988000.0,7.21,4.73,67.97,BB,FIXED,,,,,,,,,99.92,
+BND-1072,BOND,Standard Chartered,Energy,Emerging Markets,USD,16000000,15720000.0,4.42,8.01,29.35,B,FIXED,,,,,,,,,98.25,
+BND-1073,BOND,TotalEnergies SE,Industrials,North America,USD,9000000,8981100.0,3.6,5.59,29.13,BB,FIXED,,,,,,,,,99.79,
+BND-1074,BOND,Standard Chartered,Energy,Asia,USD,14000000,14179200.0,5.75,9.42,64.24,BBB,FIXED,,,,,,,,,101.28,
+BND-1075,BOND,Barclays Bank,Consumer Discretionary,Asia,GBP,8000000,7838400.0,7.0,7.95,34.33,AAA,FIXED,,,,,,,,,97.98,
+BND-1076,BOND,Mizuho Financial,Industrials,Europe,GBP,9000000,9104400.0,6.84,6.53,40.07,A,FIXED,,,,,,,,,101.16,
+BND-1077,BOND,Deutsche Bank,Technology,Emerging Markets,EUR,6000000,5910000.0,3.59,9.38,34.69,AAA,FIXED,,,,,,,,,98.5,
+BND-1078,BOND,TotalEnergies SE,Industrials,Emerging Markets,GBP,7000000,6759200.0,6.97,8.92,57.74,AAA,FIXED,,,,,,,,,96.56,
+BND-1079,BOND,Reliance Industries,Industrials,Europe,EUR,6000000,5898600.0,7.05,8.28,76.64,AA,FIXED,,,,,,,,,98.31,
+BND-1080,BOND,Reliance Industries,Financials,Europe,GBP,11000000,11203500.0,6.98,5.94,62.24,AAA,FIXED,,,,,,,,,101.85,
+BND-1081,BOND,BNP Paribas,Financials,Europe,USD,6000000,5841000.0,7.16,8.19,49.7,BBB,FIXED,,,,,,,,,97.35,
+BND-1082,BOND,Standard Chartered,Energy,Europe,GBP,12000000,12304800.0,6.86,4.83,74.0,AAA,FIXED,,,,,,,,,102.54,
+BND-1083,BOND,TotalEnergies SE,Energy,Asia,USD,6000000,6057000.0,4.79,5.17,29.17,AA,FIXED,,,,,,,,,100.95,
+BND-1084,BOND,Sumitomo Mitsui,Energy,Emerging Markets,GBP,11000000,11334400.0,3.52,9.32,35.71,BB,FIXED,,,,,,,,,103.04,
+BND-1085,BOND,Sumitomo Mitsui,Technology,North America,GBP,11000000,11160600.0,4.41,7.14,55.69,BBB,FIXED,,,,,,,,,101.46,
+BND-1086,BOND,Siemens AG,Industrials,Europe,EUR,17000000,16875900.0,5.34,8.34,66.21,AAA,FIXED,,,,,,,,,99.27,
+BND-1087,BOND,Credit Agricole,Energy,Emerging Markets,USD,11000000,11073700.0,5.99,4.25,79.0,B,FIXED,,,,,,,,,100.67,
+BND-1088,BOND,Glencore International,Energy,Emerging Markets,EUR,17000000,16697400.0,3.57,6.02,81.42,BBB,FIXED,,,,,,,,,98.22,
+BND-1089,BOND,UBS AG,Industrials,Asia,EUR,6000000,5896800.0,3.95,8.21,61.4,BB,FIXED,,,,,,,,,98.28,
+BND-1090,BOND,Tata Steel,Healthcare,Emerging Markets,EUR,9000000,8984700.0,6.57,9.26,69.16,B,FIXED,,,,,,,,,99.83,
+BND-1091,BOND,Societe Generale,Energy,Asia,USD,16000000,15732800.0,6.63,4.38,27.77,AA,FIXED,,,,,,,,,98.33,
+BND-1092,BOND,Rio Tinto,Industrials,North America,EUR,16000000,16051200.0,6.23,5.8,48.98,BBB,FIXED,,,,,,,,,100.32,
+BND-1093,BOND,BNP Paribas,Consumer Discretionary,North America,USD,9000000,8758800.0,7.31,6.61,28.01,BBB,FIXED,,,,,,,,,97.32,
+BND-1094,BOND,Standard Chartered,Utilities,North America,EUR,18000000,17906400.0,5.39,6.85,44.04,AA,FIXED,,,,,,,,,99.48,
+BND-1095,BOND,TotalEnergies SE,Industrials,Emerging Markets,GBP,8000000,8126400.0,5.14,5.06,39.83,BBB,FIXED,,,,,,,,,101.58,
+BND-1096,BOND,Sumitomo Mitsui,Utilities,Emerging Markets,GBP,10000000,9930000.0,6.21,4.91,45.15,AA,FIXED,,,,,,,,,99.3,
+BND-1097,BOND,Enel SpA,Technology,Europe,USD,12000000,12144000.0,6.18,3.89,49.46,AA,FIXED,,,,,,,,,101.2,
+BND-1098,BOND,Enel SpA,Healthcare,Emerging Markets,USD,12000000,11870400.0,6.46,9.18,26.17,AA,FIXED,,,,,,,,,98.92,
+BND-1099,BOND,Sony Group,Healthcare,Emerging Markets,USD,10000000,10165000.0,6.84,9.22,50.14,A,FIXED,,,,,,,,,101.65,
+BND-1100,BOND,Enel SpA,Utilities,Europe,EUR,10000000,9927000.0,3.13,5.52,65.75,AA,FIXED,,,,,,,,,99.27,
+LN-1101,LOAN,Siemens AG,Consumer Discretionary,Europe,EUR,17000000,17000000,5.88,3.69,,BBB,FIXED,0.012,0.354,,,,,,,,
+LN-1102,LOAN,Barclays Bank,Technology,Emerging Markets,USD,10000000,10000000,5.65,3.36,,B,SOFR_FLOATING,0.085,0.389,,,,,,,,
+LN-1103,LOAN,Tata Steel,Utilities,Emerging Markets,EUR,12000000,12000000,7.12,2.16,,B,SOFR_FLOATING,0.085,0.421,,,,,,,,
+LN-1104,LOAN,Reliance Industries,Financials,North America,USD,11000000,11000000,6.67,2.72,,A,SOFR_FLOATING,0.004,0.476,,,,,,,,
+LN-1105,LOAN,Rio Tinto,Consumer Discretionary,North America,USD,19000000,19000000,5.09,3.82,,B,EURIBOR_FLOATING,0.085,0.465,,,,,,,,
+LN-1106,LOAN,HSBC Holdings,Utilities,Europe,EUR,17000000,17000000,6.52,4.72,,A,SOFR_FLOATING,0.004,0.489,,,,,,,,
+LN-1107,LOAN,Siemens AG,Healthcare,Europe,USD,9000000,9000000,7.48,3.8,,BBB,FIXED,0.012,0.466,,,,,,,,
+LN-1108,LOAN,HSBC Holdings,Utilities,North America,EUR,18000000,18000000,6.77,2.04,,B,EURIBOR_FLOATING,0.085,0.36,,,,,,,,
+LN-1109,LOAN,Airbus SE,Utilities,Emerging Markets,USD,13000000,13000000,6.11,2.46,,B,FIXED,0.085,0.484,,,,,,,,
+LN-1110,LOAN,UBS AG,Consumer Discretionary,Asia,EUR,14000000,14000000,5.63,2.74,,B,FIXED,0.085,0.439,,,,,,,,
+LN-1111,LOAN,Societe Generale,Energy,Emerging Markets,USD,17000000,17000000,5.68,3.48,,B,FIXED,0.085,0.45,,,,,,,,
+LN-1112,LOAN,Tata Steel,Financials,Emerging Markets,USD,20000000,20000000,7.58,4.1,,BB,EURIBOR_FLOATING,0.035,0.401,,,,,,,,
+LN-1113,LOAN,Sumitomo Mitsui,Industrials,North America,USD,11000000,11000000,6.44,2.72,,A,FIXED,0.004,0.411,,,,,,,,
+LN-1114,LOAN,Rio Tinto,Consumer Discretionary,Emerging Markets,EUR,9000000,9000000,6.92,2.92,,A,EURIBOR_FLOATING,0.004,0.383,,,,,,,,
+LN-1115,LOAN,Sony Group,Energy,Emerging Markets,EUR,19000000,19000000,6.96,2.81,,B,FIXED,0.085,0.4,,,,,,,,
+LN-1116,LOAN,Sumitomo Mitsui,Financials,North America,USD,9000000,9000000,7.17,2.56,,BB,FIXED,0.035,0.43,,,,,,,,
+LN-1117,LOAN,Credit Agricole,Consumer Discretionary,Emerging Markets,EUR,9000000,9000000,5.76,2.91,,BB,SOFR_FLOATING,0.035,0.394,,,,,,,,
+LN-1118,LOAN,Enel SpA,Financials,Asia,USD,16000000,16000000,4.94,4.61,,A,EURIBOR_FLOATING,0.004,0.455,,,,,,,,
+LN-1119,LOAN,Rio Tinto,Technology,North America,EUR,15000000,15000000,7.88,2.76,,B,EURIBOR_FLOATING,0.085,0.401,,,,,,,,
+LN-1120,LOAN,Rio Tinto,Technology,North America,EUR,9000000,9000000,4.69,2.45,,B,FIXED,0.085,0.444,,,,,,,,
+LN-1121,LOAN,Sony Group,Energy,North America,USD,16000000,16000000,7.27,2.68,,A,EURIBOR_FLOATING,0.004,0.441,,,,,,,,
+LN-1122,LOAN,Glencore International,Healthcare,Emerging Markets,EUR,21000000,21000000,5.57,3.86,,BB,FIXED,0.035,0.499,,,,,,,,
+LN-1123,LOAN,BHP Group,Consumer Discretionary,North America,USD,12000000,12000000,5.34,3.66,,BBB,FIXED,0.012,0.362,,,,,,,,
+LN-1124,LOAN,UBS AG,Technology,Emerging Markets,EUR,12000000,12000000,6.97,4.11,,B,SOFR_FLOATING,0.085,0.385,,,,,,,,
+LN-1125,LOAN,TotalEnergies SE,Technology,Europe,EUR,14000000,14000000,6.77,4.73,,BBB,SOFR_FLOATING,0.012,0.432,,,,,,,,
+LN-1126,LOAN,BNP Paribas,Technology,North America,USD,17000000,17000000,7.72,3.32,,BB,FIXED,0.035,0.474,,,,,,,,
+LN-1127,LOAN,TotalEnergies SE,Consumer Discretionary,Asia,EUR,16000000,16000000,4.78,2.12,,BB,FIXED,0.035,0.424,,,,,,,,
+LN-1128,LOAN,Airbus SE,Consumer Discretionary,Asia,EUR,9000000,9000000,7.43,3.73,,A,SOFR_FLOATING,0.004,0.494,,,,,,,,
+LN-1129,LOAN,Barclays Bank,Utilities,Asia,USD,15000000,15000000,7.71,2.54,,BBB,FIXED,0.012,0.448,,,,,,,,
+LN-1130,LOAN,Sony Group,Healthcare,Emerging Markets,USD,13000000,13000000,6.85,4.57,,B,EURIBOR_FLOATING,0.085,0.4,,,,,,,,
+LN-1131,LOAN,Tata Steel,Healthcare,Emerging Markets,EUR,21000000,21000000,4.81,2.76,,B,FIXED,0.085,0.356,,,,,,,,
+LN-1132,LOAN,HSBC Holdings,Utilities,Emerging Markets,USD,14000000,14000000,5.77,4.27,,B,SOFR_FLOATING,0.085,0.378,,,,,,,,
+LN-1133,LOAN,TotalEnergies SE,Utilities,North America,USD,16000000,16000000,6.03,4.09,,BB,SOFR_FLOATING,0.035,0.489,,,,,,,,
+LN-1134,LOAN,HSBC Holdings,Technology,Europe,USD,16000000,16000000,4.83,4.98,,BB,SOFR_FLOATING,0.035,0.433,,,,,,,,
+LN-1135,LOAN,HSBC Holdings,Healthcare,North America,USD,22000000,22000000,6.97,3.25,,B,FIXED,0.085,0.394,,,,,,,,
+LN-1136,LOAN,Rio Tinto,Healthcare,Europe,EUR,14000000,14000000,6.28,4.64,,BBB,SOFR_FLOATING,0.012,0.488,,,,,,,,
+LN-1137,LOAN,Societe Generale,Energy,Emerging Markets,EUR,21000000,21000000,5.54,3.76,,BB,SOFR_FLOATING,0.035,0.392,,,,,,,,
+LN-1138,LOAN,Rio Tinto,Utilities,Europe,EUR,13000000,13000000,6.4,3.37,,B,EURIBOR_FLOATING,0.085,0.433,,,,,,,,
+LN-1139,LOAN,Tata Steel,Utilities,Europe,USD,11000000,11000000,7.11,4.12,,B,EURIBOR_FLOATING,0.085,0.357,,,,,,,,
+LN-1140,LOAN,Siemens AG,Healthcare,Europe,EUR,10000000,10000000,5.66,2.3,,A,FIXED,0.004,0.495,,,,,,,,
+LN-1141,LOAN,TotalEnergies SE,Technology,Emerging Markets,USD,14000000,14000000,4.76,4.34,,BBB,FIXED,0.012,0.495,,,,,,,,
+LN-1142,LOAN,Sumitomo Mitsui,Energy,Emerging Markets,USD,21000000,21000000,5.83,2.95,,BB,FIXED,0.035,0.479,,,,,,,,
+LN-1143,LOAN,Rio Tinto,Utilities,North America,USD,18000000,18000000,7.99,4.24,,BBB,FIXED,0.012,0.488,,,,,,,,
+LN-1144,LOAN,Airbus SE,Technology,North America,EUR,19000000,19000000,4.66,4.39,,BBB,EURIBOR_FLOATING,0.012,0.486,,,,,,,,
+LN-1145,LOAN,Mizuho Financial,Energy,Asia,EUR,11000000,11000000,6.89,2.54,,BBB,FIXED,0.012,0.412,,,,,,,,
+LN-1146,LOAN,UBS AG,Technology,Emerging Markets,USD,22000000,22000000,6.11,2.76,,B,FIXED,0.085,0.371,,,,,,,,
+LN-1147,LOAN,Sumitomo Mitsui,Consumer Discretionary,North America,EUR,18000000,18000000,6.05,3.04,,BB,FIXED,0.035,0.374,,,,,,,,
+LN-1148,LOAN,Sony Group,Energy,Emerging Markets,EUR,21000000,21000000,5.85,3.45,,B,EURIBOR_FLOATING,0.085,0.38,,,,,,,,
+LN-1149,LOAN,Standard Chartered,Healthcare,Asia,EUR,8000000,8000000,4.53,4.6,,BB,FIXED,0.035,0.409,,,,,,,,
+LN-1150,LOAN,Deutsche Bank,Industrials,Emerging Markets,EUR,17000000,17000000,5.17,2.75,,BBB,EURIBOR_FLOATING,0.012,0.383,,,,,,,,
+SWP-1151,DERIVATIVE,BNP Paribas,Financials,North America,USD,35000000,-352836.07,,,,,SWAP,,,15750.0,PAY_FIXED,,,,,,
+SWP-1152,DERIVATIVE,Mizuho Financial,Financials,North America,USD,40000000,-9176.81,,,,,SWAP,,,18000.0,RECEIVE_FIXED,,,,,,
+SWP-1153,DERIVATIVE,BNP Paribas,Financials,North America,USD,17000000,459627.81,,,,,SWAP,,,7650.0,RECEIVE_FIXED,,,,,,
+SWP-1154,DERIVATIVE,Airbus SE,Financials,North America,USD,20000000,-249205.21,,,,,SWAP,,,9000.0,RECEIVE_FIXED,,,,,,
+SWP-1155,DERIVATIVE,Glencore International,Financials,North America,USD,31000000,463486.97,,,,,SWAP,,,13950.0,PAY_FIXED,,,,,,
+SWP-1156,DERIVATIVE,Sumitomo Mitsui,Financials,North America,USD,44000000,374689.81,,,,,SWAP,,,19800.0,RECEIVE_FIXED,,,,,,
+SWP-1157,DERIVATIVE,Mizuho Financial,Financials,North America,USD,38000000,420396.96,,,,,SWAP,,,17100.0,PAY_FIXED,,,,,,
+SWP-1158,DERIVATIVE,TotalEnergies SE,Financials,North America,USD,45000000,-374700.64,,,,,SWAP,,,20250.0,PAY_FIXED,,,,,,
+SWP-1159,DERIVATIVE,Siemens AG,Financials,North America,USD,45000000,395744.48,,,,,SWAP,,,20250.0,RECEIVE_FIXED,,,,,,
+SWP-1160,DERIVATIVE,Societe Generale,Financials,North America,USD,40000000,-55425.44,,,,,SWAP,,,18000.0,RECEIVE_FIXED,,,,,,
+SWP-1161,DERIVATIVE,Enel SpA,Financials,North America,USD,18000000,4786.03,,,,,SWAP,,,8100.0,RECEIVE_FIXED,,,,,,
+SWP-1162,DERIVATIVE,Sony Group,Financials,North America,USD,27000000,372417.3,,,,,SWAP,,,12150.0,RECEIVE_FIXED,,,,,,
+SWP-1163,DERIVATIVE,HSBC Holdings,Financials,North America,USD,36000000,-216178.1,,,,,SWAP,,,16200.0,PAY_FIXED,,,,,,
+SWP-1164,DERIVATIVE,BHP Group,Financials,North America,USD,43000000,493169.14,,,,,SWAP,,,19350.0,RECEIVE_FIXED,,,,,,
+SWP-1165,DERIVATIVE,BHP Group,Financials,North America,USD,22000000,197652.38,,,,,SWAP,,,9900.0,RECEIVE_FIXED,,,,,,
+SWP-1166,DERIVATIVE,Mizuho Financial,Financials,North America,USD,35000000,-41704.14,,,,,SWAP,,,15750.0,PAY_FIXED,,,,,,
+SWP-1167,DERIVATIVE,Deutsche Bank,Financials,North America,USD,45000000,-412787.87,,,,,SWAP,,,20250.0,RECEIVE_FIXED,,,,,,
+SWP-1168,DERIVATIVE,HSBC Holdings,Financials,North America,USD,18000000,-215199.97,,,,,SWAP,,,8100.0,PAY_FIXED,,,,,,
+SWP-1169,DERIVATIVE,Siemens AG,Financials,North America,USD,29000000,-78988.48,,,,,SWAP,,,13050.0,RECEIVE_FIXED,,,,,,
+SWP-1170,DERIVATIVE,Sony Group,Financials,North America,USD,38000000,276599.15,,,,,SWAP,,,17100.0,RECEIVE_FIXED,,,,,,
+SWP-1171,DERIVATIVE,HSBC Holdings,Financials,North America,USD,41000000,39347.04,,,,,SWAP,,,18450.0,RECEIVE_FIXED,,,,,,
+SWP-1172,DERIVATIVE,Sumitomo Mitsui,Financials,North America,USD,16000000,240280.66,,,,,SWAP,,,7200.0,PAY_FIXED,,,,,,
+SWP-1173,DERIVATIVE,TotalEnergies SE,Financials,North America,USD,29000000,500555.17,,,,,SWAP,,,13050.0,RECEIVE_FIXED,,,,,,
+SWP-1174,DERIVATIVE,HSBC Holdings,Financials,North America,USD,36000000,-82665.04,,,,,SWAP,,,16200.0,RECEIVE_FIXED,,,,,,
+SWP-1175,DERIVATIVE,Deutsche Bank,Financials,North America,USD,27000000,-174118.56,,,,,SWAP,,,12150.0,PAY_FIXED,,,,,,
+FXF-1176,DERIVATIVE,TotalEnergies SE,Financials,Global,USD,12000000,108287.58,,,,,FX_FORWARD,,,,,USDGBP,0.88,,,,
+FXF-1177,DERIVATIVE,Barclays Bank,Financials,Global,USD,11000000,-174445.67,,,,,FX_FORWARD,,,,,USDJPY,0.77,,,,
+FXF-1178,DERIVATIVE,Sony Group,Financials,Global,USD,16000000,82524.67,,,,,FX_FORWARD,,,,,USDEUR,0.93,,,,
+FXF-1179,DERIVATIVE,Sony Group,Financials,Global,USD,16000000,-161467.49,,,,,FX_FORWARD,,,,,USDGBP,0.79,,,,
+FXF-1180,DERIVATIVE,BHP Group,Financials,Global,USD,10000000,-163187.21,,,,,FX_FORWARD,,,,,USDJPY,0.94,,,,
+FXF-1181,DERIVATIVE,BNP Paribas,Financials,Global,USD,27000000,-184044.19,,,,,FX_FORWARD,,,,,USDJPY,0.92,,,,
+FXF-1182,DERIVATIVE,Barclays Bank,Financials,Global,USD,14000000,223058.92,,,,,FX_FORWARD,,,,,USDEUR,0.8,,,,
+FXF-1183,DERIVATIVE,Sony Group,Financials,Global,USD,20000000,-218560.59,,,,,FX_FORWARD,,,,,USDEUR,0.75,,,,
+FXF-1184,DERIVATIVE,Airbus SE,Financials,Global,USD,26000000,35747.58,,,,,FX_FORWARD,,,,,USDEUR,0.91,,,,
+FXF-1185,DERIVATIVE,Reliance Industries,Financials,Global,USD,26000000,-117070.15,,,,,FX_FORWARD,,,,,USDEUR,0.83,,,,
+FXF-1186,DERIVATIVE,BHP Group,Financials,Global,USD,11000000,328415.71,,,,,FX_FORWARD,,,,,USDJPY,0.83,,,,
+FXF-1187,DERIVATIVE,Deutsche Bank,Financials,Global,USD,25000000,-185222.9,,,,,FX_FORWARD,,,,,USDINR,0.82,,,,
+FXF-1188,DERIVATIVE,TotalEnergies SE,Financials,Global,USD,12000000,-160999.7,,,,,FX_FORWARD,,,,,USDEUR,0.79,,,,
+FXF-1189,DERIVATIVE,BNP Paribas,Financials,Global,USD,18000000,108435.11,,,,,FX_FORWARD,,,,,USDJPY,0.81,,,,
+FXF-1190,DERIVATIVE,Mizuho Financial,Financials,Global,USD,24000000,171067.65,,,,,FX_FORWARD,,,,,USDINR,0.73,,,,
+FXF-1191,DERIVATIVE,Enel SpA,Financials,Global,USD,16000000,-112903.86,,,,,FX_FORWARD,,,,,USDINR,0.83,,,,
+FXF-1192,DERIVATIVE,Tata Steel,Financials,Global,USD,24000000,-192948.5,,,,,FX_FORWARD,,,,,USDINR,0.82,,,,
+FXF-1193,DERIVATIVE,Airbus SE,Financials,Global,USD,20000000,-158416.65,,,,,FX_FORWARD,,,,,USDJPY,0.8,,,,
+FXF-1194,DERIVATIVE,Rio Tinto,Financials,Global,USD,12000000,-194061.94,,,,,FX_FORWARD,,,,,USDEUR,0.93,,,,
+FXF-1195,DERIVATIVE,HSBC Holdings,Financials,Global,USD,21000000,101879.05,,,,,FX_FORWARD,,,,,USDGBP,0.86,,,,
+FXF-1196,DERIVATIVE,Enel SpA,Financials,Global,USD,27000000,-3514.82,,,,,FX_FORWARD,,,,,USDJPY,0.89,,,,
+FXF-1197,DERIVATIVE,Airbus SE,Financials,Global,USD,11000000,-39012.29,,,,,FX_FORWARD,,,,,USDJPY,0.87,,,,
+FXF-1198,DERIVATIVE,Sony Group,Financials,Global,USD,26000000,39313.64,,,,,FX_FORWARD,,,,,USDGBP,0.74,,,,
+FXF-1199,DERIVATIVE,HSBC Holdings,Financials,Global,USD,21000000,-82859.07,,,,,FX_FORWARD,,,,,USDJPY,0.73,,,,
+FXF-1200,DERIVATIVE,Standard Chartered,Financials,Global,USD,23000000,144698.74,,,,,FX_FORWARD,,,,,USDEUR,0.87,,,,

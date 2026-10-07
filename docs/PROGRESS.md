@@ -12,9 +12,9 @@
 |---|---|---|---|---|
 | **Phase 0** | Rules, Setup, Contracts & Progress Tracker | Completed | ~1.5 hours | `da6ca34` (docs(phase0): initialize repository with project rules, specs, and progress tracking) |
 | **Phase 1** | Scaffolding, Contracts & Orchestration | Completed | ~3.5 hours | `def1bda` (feat(phase1): scaffold Spring Boot backend, Vite React frontend, and OpenAPI contracts) |
-| **Phase 2** | NLP Risk Engine (Sidecar + Spring Ingestion + Heuristic Fallback) | Completed | ~4.5 hours | Pending |
-| **Phase 3** | Synthetic Portfolio Generator & Market Data Caching | In Progress | ~3.5 hours | Pending |
-| **Phase 4** | Financial Stress Testing Engine & Revaluator Strategies | Planned | ~5.5 hours | Pending |
+| **Phase 2** | NLP Risk Engine (Sidecar + Spring Ingestion + Heuristic Fallback) | Completed | ~4.5 hours | `860d9ef` (feat(phase2-ingest): add multi-source ingestion, Java fallback analyzer, impact scorer, and signal streaming) |
+| **Phase 3** | Synthetic Portfolio Generator & Market Data Caching | Completed | ~3.5 hours | Pending |
+| **Phase 4** | Financial Stress Testing Engine & Revaluator Strategies | In Progress | ~5.5 hours | Pending |
 | **Phase 5** | Interactive Financial Dashboard & Real-Time SSE Streams | Planned | ~5.0 hours | Pending |
 | **Phase 6** | Packaging, Architecture Diagrams & Submission Assets | Planned | ~3.0 hours | Pending |
 
@@ -47,3 +47,11 @@
 - Integrated `NlpClient` with WebClient timeout, retry, and zero-dependency `FallbackAnalyzer` (achieved 100% accuracy on 20 labeled test cases).
 - Implemented REST query endpoints (`GET /api/signals`, `POST /api/analyze`, `POST /api/ingest/run`) and live SSE streaming (`GET /api/signals/stream`).
 - Added comprehensive unit tests in `NlpEngineTests.java`.
+
+### Phase 3 Log
+- Implemented deterministic synthetic portfolio generator `scripts/generate_portfolio.py` seeded with `42`.
+- Generated 200 multi-asset positions totaling $1,759,091,843.29 (within the required $1B-$2B target) across Loans, Corporate/Sovereign Bonds, IR Swaps, FX Forwards, and Equities.
+- Committed cached equity prices and betas in `data/cached_equities.csv`.
+- Created JPA `Position` entity, repository, and `PortfolioDataLoader` startup runner.
+- Built `PortfolioService` with baseline Expected Loss calculation and dimensional slice aggregations (`/api/portfolio/summary`, `/api/portfolio/positions`).
+- Verified portfolio composition and valuation bounds via `PortfolioTests.java`.
