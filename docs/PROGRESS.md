@@ -14,9 +14,9 @@
 | **Phase 1** | Scaffolding, Contracts & Orchestration | Completed | ~3.5 hours | `def1bda` (feat(phase1): scaffold Spring Boot backend, Vite React frontend, and OpenAPI contracts) |
 | **Phase 2** | NLP Risk Engine (Sidecar + Spring Ingestion + Heuristic Fallback) | Completed | ~4.5 hours | `860d9ef` (feat(phase2-ingest): add multi-source ingestion, Java fallback analyzer, impact scorer, and signal streaming) |
 | **Phase 3** | Synthetic Portfolio Generator & Market Data Caching | Completed | ~3.5 hours | `72f94b5` (feat(phase3): generate multi-asset synthetic portfolio and startup loader with market caching) |
-| **Phase 4** | Financial Stress Testing Engine & Revaluator Strategies | Completed | ~5.5 hours | Pending |
-| **Phase 5** | Interactive Financial Dashboard & Real-Time SSE Streams | In Progress | ~5.0 hours | Pending |
-| **Phase 6** | Packaging, Architecture Diagrams & Submission Assets | Planned | ~3.0 hours | Pending |
+| **Phase 4** | Financial Stress Testing Engine & Revaluator Strategies | Completed | ~5.5 hours | `75830fb` (feat(phase4): implement financial stress testing engine with multi-asset revaluation and trigger debouncing) |
+| **Phase 5** | Interactive Financial Dashboard & Real-Time SSE Streams | Completed | ~5.0 hours | Pending |
+| **Phase 6** | Packaging, Architecture Diagrams & Submission Assets | In Progress | ~3.0 hours | Pending |
 
 ---
 
@@ -67,3 +67,13 @@
 - Developed `TriggerService` with runtime thresholding (`impact > 7`, `confidence > 0.5`) and 30-minute debouncing.
 - Implemented `StressService` computing multi-dimensional breakdowns, top 10 impacted positions, and SSE broadcasting (`/api/stress/stream`, `/api/stress/results`, `/api/stress/run`).
 - Verified with unit tests in `StressEngineTests.java`: Passed hand-calculated revaluator validations, monotonicity scaling test, and E2E geopolitical impact 9 shock ($134.5M loss on $1.76B portfolio).
+
+### Phase 5 Log
+- Created modern React 18 + Vite + TypeScript dashboard with dark glassmorphism styling and custom typography.
+- Implemented Header KPIs displaying portfolio valuation ($1.76B), last stress impact delta %, expected loss migration, and active risk radar alerts.
+- Built live SSE signal feed with color-coded impact badges (1..10), FinBERT sentiment indicators, and threshold highlight borders.
+- Developed interactive Stress Panel with Recharts Before vs After grouped bars, breakdown tabs (Asset Class, Sector, Region), and Top-10 Loss Positions table.
+- Added "Why this shock?" slide-over drawer visualizing parameter scaling, macro shock vectors, and pricing model rationales.
+- Built Scenario Injector modal and real-time threshold slider synced with backend REST API.
+- Included historical timeline tracking portfolio path across runs.
+- Verified live end-to-end integration across REST and SSE.
