@@ -26,9 +26,14 @@ public class PortfolioDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (positionRepository.count() > 0) {
+        if (positionRepository.count() >= 100) {
             log.info("Portfolio already populated with {} positions", positionRepository.count());
             return;
+        }
+
+        if (positionRepository.count() > 0) {
+            log.info("Resetting partial portfolio of {} positions to load full dataset", positionRepository.count());
+            positionRepository.deleteAll();
         }
 
         File file = new File(CSV_PATH);
@@ -36,43 +41,53 @@ public class PortfolioDataLoader implements CommandLineRunner {
             file = new File("../data/portfolio.csv");
         }
 
-        if (!file.exists()) {
-            log.warn("Portfolio CSV not found at {}, generating fallback in-memory positions", CSV_PATH);
-            generateInMemoryPositions();
-            return;
-        }
+        try {
+            Reader reader = null;
+            if (file.exists()) {
+                reader = new FileReader(file, StandardCharsets.UTF_8);
+            } else {
+                var is = getClass().getResourceAsStream("/data/portfolio.csv");
+                if (is != null) {
+                    reader = new java.io.InputStreamReader(is, StandardCharsets.UTF_8);
+                }
+            }
 
-        List<Position> positions = new ArrayList<>();
-        try (Reader reader = new FileReader(file, StandardCharsets.UTF_8);
-             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).build())) {
+            if (reader == null) {
+                log.warn("Portfolio CSV not found, generating fallback in-memory positions");
+                generateInMemoryPositions();
+                return;
+            }
 
-            for (CSVRecord record : parser) {
-                Position pos = Position.builder()
-                        .positionId(record.get("positionId"))
-                        .assetClass(record.get("assetClass"))
-                        .counterparty(record.get("counterparty"))
-                        .sector(record.get("sector"))
-                        .region(record.get("region"))
-                        .currency(record.get("currency"))
-                        .notional(parseDouble(record.get("notional")))
-                        .marketValue(parseDouble(record.get("marketValue")))
-                        .coupon(parseDouble(record.get("coupon")))
-                        .modifiedDuration(parseDouble(record.get("modifiedDuration")))
-                        .convexity(parseDouble(record.get("convexity")))
-                        .rating(record.get("rating"))
-                        .rateType(record.get("rateType"))
-                        .pd(parseDouble(record.get("pd")))
-                        .lgd(parseDouble(record.get("lgd")))
-                        .dv01(parseDouble(record.get("dv01")))
-                        .payReceive(record.get("payReceive"))
-                        .currencyPair(record.get("currencyPair"))
-                        .delta(parseDouble(record.get("delta")))
-                        .ticker(record.get("ticker"))
-                        .shares(parseDouble(record.get("shares")))
-                        .price(parseDouble(record.get("price")))
-                        .beta(parseDouble(record.get("beta")))
-                        .build();
-                positions.add(pos);
+            List<Position> positions = new ArrayList<>();
+            try (CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).build())) {
+                for (CSVRecord record : parser) {
+                    Position pos = Position.builder()
+                            .positionId(record.get("positionId"))
+                            .assetClass(record.get("assetClass"))
+                            .counterparty(record.get("counterparty"))
+                            .sector(record.get("sector"))
+                            .region(record.get("region"))
+                            .currency(record.get("currency"))
+                            .notional(parseDouble(record.get("notional")))
+                            .marketValue(parseDouble(record.get("marketValue")))
+                            .coupon(parseDouble(record.get("coupon")))
+                            .modifiedDuration(parseDouble(record.get("modifiedDuration")))
+                            .convexity(parseDouble(record.get("convexity")))
+                            .rating(record.get("rating"))
+                            .rateType(record.get("rateType"))
+                            .pd(parseDouble(record.get("pd")))
+                            .lgd(parseDouble(record.get("lgd")))
+                            .dv01(parseDouble(record.get("dv01")))
+                            .payReceive(record.get("payReceive"))
+                            .currencyPair(record.get("currencyPair"))
+                            .delta(parseDouble(record.get("delta")))
+                            .ticker(record.get("ticker"))
+                            .shares(parseDouble(record.get("shares")))
+                            .price(parseDouble(record.get("price")))
+                            .beta(parseDouble(record.get("beta")))
+                            .build();
+                    positions.add(pos);
+                }
             }
 
             positionRepository.saveAll(positions);
