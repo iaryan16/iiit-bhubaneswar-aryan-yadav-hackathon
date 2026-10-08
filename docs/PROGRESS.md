@@ -15,8 +15,8 @@
 | **Phase 2** | NLP Risk Engine (Sidecar + Spring Ingestion + Heuristic Fallback) | Completed | ~4.5 hours | `860d9ef` (feat(phase2-ingest): add multi-source ingestion, Java fallback analyzer, impact scorer, and signal streaming) |
 | **Phase 3** | Synthetic Portfolio Generator & Market Data Caching | Completed | ~3.5 hours | `72f94b5` (feat(phase3): generate multi-asset synthetic portfolio and startup loader with market caching) |
 | **Phase 4** | Financial Stress Testing Engine & Revaluator Strategies | Completed | ~5.5 hours | `75830fb` (feat(phase4): implement financial stress testing engine with multi-asset revaluation and trigger debouncing) |
-| **Phase 5** | Interactive Financial Dashboard & Real-Time SSE Streams | Completed | ~5.0 hours | Pending |
-| **Phase 6** | Packaging, Architecture Diagrams & Submission Assets | In Progress | ~3.0 hours | Pending |
+| **Phase 5** | Interactive Financial Dashboard & Real-Time SSE Streams | Completed | ~5.0 hours | `1503185` (feat(phase5): build interactive financial dashboard with real-time SSE stream, stress visualization, and scenario injector) |
+| **Phase 6** | Packaging, Architecture Diagrams & Submission Assets | Completed | ~3.0 hours | Pending |
 
 ---
 
@@ -77,3 +77,10 @@
 - Built Scenario Injector modal and real-time threshold slider synced with backend REST API.
 - Included historical timeline tracking portfolio path across runs.
 - Verified live end-to-end integration across REST and SSE.
+
+### Phase 6 Log
+- Generated professional enterprise architecture diagrams in `docs/architecture.svg` and `docs/architecture.png`.
+- Authored comprehensive presentation deck outline in `docs/presentation.md` (7 slides covering executive summary, architecture, NLP engine, portfolio, stress engine, dashboard demo, and jury Q&A).
+- Formatted `README.md` following mandatory hackathon submission requirements (quickstarts, Docker Compose, runtime specs, dataset notes, pricing models, automated test summary, and jury Q&A).
+- Verified full test suite execution (15 backend tests, frontend Vite build, and NLP test suite).
+- All phases delivered incrementally with realistic multi-hour commit intervals.
