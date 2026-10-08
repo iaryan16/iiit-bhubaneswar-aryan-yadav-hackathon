@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sliders, RefreshCw, PlayCircle } from 'lucide-react';
+import { Sliders, RefreshCw, Zap } from 'lucide-react';
 import type { ThresholdConfig } from '../types/risk';
 
 interface ThresholdControlProps {
@@ -18,13 +18,13 @@ export const ThresholdControl: React.FC<ThresholdControlProps> = ({
   isReplaying,
 }) => {
   return (
-    <div className="glass-panel p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+    <div className="glass-panel p-3.5 mb-6 flex flex-wrap items-center justify-between gap-4">
       {/* Left: Dynamic Threshold Slider */}
       <div className="flex items-center gap-4 flex-1 min-w-[280px]">
-        <div className="flex items-center gap-2 text-slate-300 font-medium text-sm">
+        <div className="flex items-center gap-2 text-slate-300 font-medium text-xs">
           <Sliders className="w-4 h-4 text-blue-400" />
-          <span>Trigger Threshold:</span>
-          <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono font-bold text-sm border border-blue-500/30">
+          <span>Stress Trigger Level:</span>
+          <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 font-mono font-bold text-xs border border-blue-500/30">
             ≥ {config.impactThreshold} / 10
           </span>
         </div>
@@ -36,30 +36,48 @@ export const ThresholdControl: React.FC<ThresholdControlProps> = ({
           step="1"
           value={config.impactThreshold}
           onChange={(e) => onChange(parseInt(e.target.value, 10))}
-          className="flex-1 max-w-[220px] h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500 border border-slate-700"
+          className="flex-1 max-w-[180px] h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500 border border-slate-700"
         />
 
-        <div className="text-xs text-slate-400 hidden sm:block">
-          Confidence: ≥ {(config.confidenceThreshold * 100).toFixed(0)}%
+        {/* Quick presets */}
+        <div className="hidden sm:flex items-center gap-1">
+          {[5, 7, 9].map((lvl) => (
+            <button
+              key={lvl}
+              onClick={() => onChange(lvl)}
+              className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
+                config.impactThreshold === lvl
+                  ? 'bg-blue-600 text-white font-bold'
+                  : 'bg-slate-800/80 text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              {lvl}
+            </button>
+          ))}
+        </div>
+
+        <div className="text-[11px] text-slate-400 font-mono hidden md:block">
+          Debounce: {config.debounceMinutes}m
         </div>
       </div>
 
       {/* Right: Actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         <button
           onClick={onReplay}
           disabled={isReplaying}
-          className="btn-secondary flex items-center gap-2 text-xs"
+          className="btn-secondary flex items-center gap-1.5 text-xs py-1.5 px-3"
+          title="Replay synthetic GDELT and News stream"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isReplaying ? 'animate-spin text-blue-400' : ''}`} />
-          <span>{isReplaying ? 'Replaying...' : 'Replay Stream'}</span>
+          <span>{isReplaying ? 'Replaying...' : 'Replay Signals'}</span>
         </button>
 
         <button
           onClick={onOpenInjector}
-          className="btn-primary flex items-center gap-2 text-xs shadow-lg shadow-blue-500/20"
+          className="btn-primary flex items-center gap-1.5 text-xs py-1.5 px-3.5 shadow-md shadow-blue-500/20"
         >
-          <PlayCircle className="w-4 h-4 text-blue-200" />
+          <Zap className="w-3.5 h-3.5 text-amber-300" />
           <span>Inject Scenario</span>
         </button>
       </div>

@@ -6,10 +6,9 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { Layers, HelpCircle } from 'lucide-react';
+import { Layers, HelpCircle, ArrowDownRight, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
 import type { StressResult, RevaluationPosition } from '../types/risk';
 
 interface StressPanelProps {
@@ -22,26 +21,27 @@ export const StressPanel: React.FC<StressPanelProps> = ({
   onOpenWhyDrawer,
 }) => {
   const [activeTab, setActiveTab] = useState<'assetClass' | 'sector' | 'region'>('assetClass');
+  const [showAllPositions, setShowAllPositions] = useState<boolean>(false);
 
-  // Parse breakdown and top positions JSON from latestStress
+  // Parse breakdown and top positions JSON
   const assetClassData = latestStress?.breakdownByAssetClassJson
     ? Object.entries(JSON.parse(latestStress.breakdownByAssetClassJson)).map(([k, v]) => ({
         name: k,
-        delta: Math.round((v as number) / 1e6 * 100) / 100, // in $M
+        delta: Math.round(((v as number) / 1e6) * 100) / 100, // in $M
       }))
     : [];
 
   const sectorData = latestStress?.breakdownBySectorJson
     ? Object.entries(JSON.parse(latestStress.breakdownBySectorJson)).map(([k, v]) => ({
         name: k,
-        delta: Math.round((v as number) / 1e6 * 100) / 100, // in $M
+        delta: Math.round(((v as number) / 1e6) * 100) / 100, // in $M
       }))
     : [];
 
   const regionData = latestStress?.breakdownByRegionJson
     ? Object.entries(JSON.parse(latestStress.breakdownByRegionJson)).map(([k, v]) => ({
         name: k,
-        delta: Math.round((v as number) / 1e6 * 100) / 100, // in $M
+        delta: Math.round(((v as number) / 1e6) * 100) / 100, // in $M
       }))
     : [];
 
@@ -49,128 +49,180 @@ export const StressPanel: React.FC<StressPanelProps> = ({
     ? JSON.parse(latestStress.topLossPositionsJson)
     : [];
 
-  // Grouped Bar Comparison Data: Before vs After
-  const comparisonData = latestStress
-    ? [
-        {
-          name: 'Portfolio MV ($B)',
-          Baseline: parseFloat((latestStress.portfolioValueBefore / 1e9).toFixed(3)),
-          Stressed: parseFloat((latestStress.portfolioValueAfter / 1e9).toFixed(3)),
-        },
-        {
-          name: 'Expected Loss ($M)',
-          Baseline: parseFloat((latestStress.expectedLossBefore / 1e6).toFixed(2)),
-          Stressed: parseFloat((latestStress.expectedLossAfter / 1e6).toFixed(2)),
-        },
-      ]
-    : [];
+  const displayedPositions = showAllPositions ? topLossPositions : topLossPositions.slice(0, 5);
+
+  const currentChartData =
+    activeTab === 'assetClass' ? assetClassData : activeTab === 'sector' ? sectorData : regionData;
+
+  const retainedPct = latestStress
+    ? Math.max(0, Math.min(100, (latestStress.portfolioValueAfter / latestStress.portfolioValueBefore) * 100))
+    : 100;
 
   return (
     <div className="space-y-6">
-      {/* 1. Before vs After Chart Panel */}
+      {/* 1. Active Scenario Context & Direct Impact Card */}
       <div className="glass-panel p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800/80">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-800">
           <div>
-            <h2 className="text-base font-semibold text-white tracking-wide flex items-center gap-2">
-              <span>Stress Valuation Impact (Before vs After)</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono uppercase text-slate-400">Current Shock Scenario</span>
               {latestStress && (
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-mono">
-                  {latestStress.eventType} (Impact {latestStress.impactScore})
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20 font-medium">
+                  {latestStress.eventType.replace('_', ' ')} • Severity {latestStress.impactScore}/10
                 </span>
               )}
+            </div>
+            <h2 className="text-sm font-semibold text-white mt-1">
+              {latestStress?.headline || 'No scenario injected yet. Inject a scenario to see stress revaluation.'}
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Comparative revaluation of balance sheet capital and credit migration reserves
-            </p>
           </div>
 
           {latestStress && (
             <button
               onClick={() => onOpenWhyDrawer(latestStress)}
-              className="btn-secondary flex items-center gap-1.5 text-xs text-blue-300 border-blue-500/30 hover:bg-blue-500/10"
+              className="btn-secondary text-xs flex items-center gap-1.5 text-blue-300 border-blue-500/30 hover:bg-blue-500/10"
             >
               <HelpCircle className="w-3.5 h-3.5 text-blue-400" />
-              <span>Why this shock?</span>
+              <span>Explain Math</span>
             </button>
           )}
         </div>
 
-        {/* Visual Chart */}
-        <div className="h-64 w-full">
-          {comparisonData.length === 0 ? (
-            <div className="h-full flex items-center justify-center text-slate-500 text-xs">
-              No stress test executed yet. Inject or trigger a scenario to view Before vs After impact.
+        {/* Dual Impact Cards with Intuitive Progress Bar */}
+        {latestStress ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Box 1: Portfolio Capital Revaluation */}
+            <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+              <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+                <span>Portfolio Capital Shock</span>
+                <span className="font-mono text-rose-400 flex items-center gap-0.5 font-bold">
+                  <ArrowDownRight className="w-3.5 h-3.5" />
+                  {latestStress.deltaPercentage.toFixed(2)}%
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between mb-3">
+                <div>
+                  <span className="text-xl font-bold text-white">
+                    ${(latestStress.portfolioValueAfter / 1e9).toFixed(3)}B
+                  </span>
+                  <span className="text-xs text-slate-400 ml-2">
+                    from ${(latestStress.portfolioValueBefore / 1e9).toFixed(3)}B
+                  </span>
+                </div>
+                <span className="text-xs font-mono font-semibold text-rose-400">
+                  -${(Math.abs(latestStress.deltaValue) / 1e6).toFixed(1)}M loss
+                </span>
+              </div>
+              {/* Visual Value Retention Bar */}
+              <div className="space-y-1">
+                <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden flex">
+                  <div
+                    className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-500"
+                    style={{ width: `${retainedPct}%` }}
+                  />
+                  <div
+                    className="h-full bg-rose-500 transition-all duration-500"
+                    style={{ width: `${100 - retainedPct}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+                  <span>{retainedPct.toFixed(1)}% Retained Capital</span>
+                  <span>{(100 - retainedPct).toFixed(1)}% Drawdown</span>
+                </div>
+              </div>
             </div>
-          ) : (
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={comparisonData} margin={{ top: 20, right: 30, left: 10, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#0f172a',
-                    borderColor: '#334155',
-                    borderRadius: '8px',
-                    fontSize: '12px',
-                    color: '#f8fafc',
-                  }}
-                />
-                <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                <Bar dataKey="Baseline" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Stressed" fill="#f43f5e" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          )}
-        </div>
+
+            {/* Box 2: Credit Migration & Expected Loss */}
+            <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+              <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+                <span>Credit Loss Reserve (PD × LGD)</span>
+                <span className="font-mono text-amber-400 font-bold">
+                  +${((latestStress.expectedLossAfter - latestStress.expectedLossBefore) / 1e6).toFixed(2)}M
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between mb-3">
+                <div>
+                  <span className="text-xl font-bold text-amber-300">
+                    ${(latestStress.expectedLossAfter / 1e6).toFixed(2)}M
+                  </span>
+                  <span className="text-xs text-slate-400 ml-2">
+                    from ${(latestStress.expectedLossBefore / 1e6).toFixed(2)}M
+                  </span>
+                </div>
+                <span className="text-xs text-amber-400/80 font-medium">
+                  Rating Migration
+                </span>
+              </div>
+              {/* Context Pill */}
+              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 flex items-center gap-2">
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                <span>
+                  High-yield transition and spread widening increase mandatory capital reserves.
+                </span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="text-center py-6 text-slate-500 text-xs">
+            Execute a scenario injection to inspect Before vs After revaluation.
+          </div>
+        )}
       </div>
 
-      {/* 2. Breakdown Slices & Tabs */}
+      {/* 2. Loss Breakdown Slices ($ Millions) */}
       <div className="glass-panel p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800/80">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
           <div className="flex items-center gap-2">
             <Layers className="w-4 h-4 text-blue-400" />
-            <h3 className="text-sm font-semibold text-white">Loss Breakdown Slices ($ Millions)</h3>
+            <h3 className="text-sm font-semibold text-white">Loss Breakdown by Exposure ($ Millions)</h3>
           </div>
 
           {/* Slices Tabs */}
-          <div className="flex items-center gap-1 bg-slate-900/80 p-0.5 rounded-lg border border-slate-800">
+          <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
             <button
               onClick={() => setActiveTab('assetClass')}
-              className={`px-3 py-1 text-xs rounded transition-colors ${activeTab === 'assetClass' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'}`}
+              className={`px-3 py-1 text-xs rounded transition-colors ${
+                activeTab === 'assetClass' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'
+              }`}
             >
               Asset Class
             </button>
             <button
               onClick={() => setActiveTab('sector')}
-              className={`px-3 py-1 text-xs rounded transition-colors ${activeTab === 'sector' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'}`}
+              className={`px-3 py-1 text-xs rounded transition-colors ${
+                activeTab === 'sector' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'
+              }`}
             >
               Sector
             </button>
             <button
               onClick={() => setActiveTab('region')}
-              className={`px-3 py-1 text-xs rounded transition-colors ${activeTab === 'region' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'}`}
+              className={`px-3 py-1 text-xs rounded transition-colors ${
+                activeTab === 'region' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'
+              }`}
             >
               Region
             </button>
           </div>
         </div>
 
-        {/* Tab Content Chart */}
+        {/* Tab Content Bar Chart */}
         <div className="h-56 w-full">
-          {(!latestStress || (activeTab === 'assetClass' ? assetClassData : activeTab === 'sector' ? sectorData : regionData).length === 0) ? (
+          {currentChartData.length === 0 ? (
             <div className="h-full flex items-center justify-center text-slate-500 text-xs">
-              Execute a scenario run to inspect multi-dimensional loss slices.
+              Execute a scenario test to view loss distribution slices.
             </div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={activeTab === 'assetClass' ? assetClassData : activeTab === 'sector' ? sectorData : regionData}
-                margin={{ top: 10, right: 20, left: 10, bottom: 20 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} angle={-15} textAnchor="end" tickLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} label={{ value: 'Delta ($M)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }} />
+              <BarChart data={currentChartData} margin={{ top: 10, right: 20, left: 10, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} />
+                <YAxis
+                  stroke="#94a3b8"
+                  fontSize={11}
+                  tickLine={false}
+                  label={{ value: 'Net Loss ($M)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }}
+                />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#0f172a',
@@ -179,7 +231,7 @@ export const StressPanel: React.FC<StressPanelProps> = ({
                     fontSize: '12px',
                     color: '#f8fafc',
                   }}
-                  formatter={(val: any) => [`$${val}M`, 'Net Delta']}
+                  formatter={(val: any) => [`$${val}M`, 'Net Impact']}
                 />
                 <Bar dataKey="delta" fill="#f43f5e" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -188,53 +240,58 @@ export const StressPanel: React.FC<StressPanelProps> = ({
         </div>
       </div>
 
-      {/* 3. Top-10 Impacted Positions Table */}
+      {/* 3. Top Impacted Holdings */}
       <div className="glass-panel p-5">
-        <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/80">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
           <div>
-            <h3 className="text-sm font-semibold text-white">Top-10 Loss Positions</h3>
-            <p className="text-xs text-slate-400">Largest individual position drawdowns in current stress test</p>
+            <h3 className="text-sm font-semibold text-white">Top Impacted Holdings</h3>
+            <p className="text-xs text-slate-400">Largest individual position drawdowns in active stress test</p>
           </div>
-          <span className="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">
-            {topLossPositions.length} positions
-          </span>
+          {topLossPositions.length > 5 && (
+            <button
+              onClick={() => setShowAllPositions(!showAllPositions)}
+              className="text-xs text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 transition-colors"
+            >
+              <span>{showAllPositions ? 'Show top 5' : `Show all ${topLossPositions.length}`}</span>
+              {showAllPositions ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
+          )}
         </div>
 
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 uppercase font-mono text-[10px]">
-                <th className="py-2 px-3">Rank</th>
-                <th className="py-2 px-3">Position ID</th>
-                <th className="py-2 px-3">Counterparty / Asset</th>
-                <th className="py-2 px-3">Asset Class</th>
-                <th className="py-2 px-3">Sector</th>
-                <th className="py-2 px-3 text-right">Base MV</th>
-                <th className="py-2 px-3 text-right">Stressed MV</th>
-                <th className="py-2 px-3 text-right">Delta ($)</th>
-                <th className="py-2 px-3 text-right">Delta (%)</th>
-                <th className="py-2 px-3 text-center">Action</th>
+              <tr className="border-b border-slate-800 text-slate-400 font-mono text-[10px] uppercase">
+                <th className="py-2.5 px-3">Rank</th>
+                <th className="py-2.5 px-3">Position & Counterparty</th>
+                <th className="py-2.5 px-3">Asset Class</th>
+                <th className="py-2.5 px-3 text-right">Base MV</th>
+                <th className="py-2.5 px-3 text-right">Stressed MV</th>
+                <th className="py-2.5 px-3 text-right">Net Loss</th>
+                <th className="py-2.5 px-3 text-right">Loss %</th>
+                <th className="py-2.5 px-3 text-center">Rationale</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {topLossPositions.length === 0 ? (
+              {displayedPositions.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="py-8 text-center text-slate-500">
+                  <td colSpan={8} className="py-8 text-center text-slate-500">
                     No stress test data available.
                   </td>
                 </tr>
               ) : (
-                topLossPositions.map((pos, idx) => (
+                displayedPositions.map((pos, idx) => (
                   <tr key={pos.positionId} className="hover:bg-slate-800/30 transition-colors">
                     <td className="py-2.5 px-3 font-mono text-slate-500">#{idx + 1}</td>
-                    <td className="py-2.5 px-3 font-mono font-medium text-slate-300">{pos.positionId}</td>
-                    <td className="py-2.5 px-3 font-medium text-white">{pos.counterparty}</td>
+                    <td className="py-2.5 px-3">
+                      <div className="font-medium text-white">{pos.counterparty}</div>
+                      <div className="font-mono text-[10px] text-slate-400">{pos.positionId} • {pos.sector}</div>
+                    </td>
                     <td className="py-2.5 px-3">
                       <span className="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-[10px]">
                         {pos.assetClass}
                       </span>
                     </td>
-                    <td className="py-2.5 px-3 text-slate-400">{pos.sector}</td>
                     <td className="py-2.5 px-3 text-right font-mono text-slate-300">
                       ${(pos.baseMarketValue / 1e6).toFixed(2)}M
                     </td>
