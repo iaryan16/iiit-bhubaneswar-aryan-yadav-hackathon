@@ -56,18 +56,18 @@ export const SignalFeed: React.FC<SignalFeedProps> = ({
         </div>
 
         {/* Filter Chips */}
-        <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+        <div className="flex items-center gap-1 bg-[#090d16] p-1 rounded-lg border border-[#1a2333]">
           <button
             onClick={() => setFilterMinImpact(0)}
-            className={`px-2 py-0.5 text-[11px] rounded transition-colors ${
-              filterMinImpact === 0 ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'
+            className={`px-2.5 py-0.5 text-[11px] rounded transition-colors ${
+              filterMinImpact === 0 ? 'bg-emerald-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             All
           </button>
           <button
             onClick={() => setFilterMinImpact(threshold)}
-            className={`px-2 py-0.5 text-[11px] rounded transition-colors ${
+            className={`px-2.5 py-0.5 text-[11px] rounded transition-colors ${
               filterMinImpact === threshold ? 'bg-rose-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -84,7 +84,7 @@ export const SignalFeed: React.FC<SignalFeedProps> = ({
           placeholder="Filter by keyword, entity, topic..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-slate-900 border border-slate-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500/50"
+          className="w-full bg-[#090d16] border border-[#1b263b] rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500/60"
         />
       </div>
 

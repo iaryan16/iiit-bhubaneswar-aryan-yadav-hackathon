@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   fetchPortfolioSummary,
+  fetchPositions,
   fetchSignals,
   fetchStressResults,
   fetchThresholdConfig,
@@ -11,29 +12,33 @@ import {
   fetchHealth,
 } from './api/riskApi';
 import { useEventSource } from './hooks/useEventSource';
-import { HeaderKpis } from './components/HeaderKpis';
+import { Sidebar, type ActiveNav } from './components/Sidebar';
+import { TopNavbar } from './components/TopNavbar';
+import { ExecutiveDashboardView } from './components/ExecutiveDashboardView';
+import { PortfolioHoldingsView } from './components/PortfolioHoldingsView';
+import { StressPanel } from './components/StressPanel';
 import { ThresholdControl } from './components/ThresholdControl';
 import { SignalFeed } from './components/SignalFeed';
-import { StressPanel } from './components/StressPanel';
+import { StressHistoryTimeline } from './components/StressHistoryTimeline';
 import { WhyDrawer } from './components/WhyDrawer';
 import { ScenarioInjectorModal } from './components/ScenarioInjectorModal';
-import { StressHistoryTimeline } from './components/StressHistoryTimeline';
 import type {
   RiskSignal,
   StressResult,
   RevaluationPosition,
 } from './types/risk';
-import { Shield, Sparkles, Terminal, BarChart2, Radio, History } from 'lucide-react';
 
 export default function App() {
   const queryClient = useQueryClient();
 
-  // State
+  // Navigation State
+  const [activeNav, setActiveNav] = useState<ActiveNav>('executive');
+
+  // Modal & Selection State
   const [selectedStress, setSelectedStress] = useState<StressResult | null>(null);
   const [selectedPosition, setSelectedPosition] = useState<RevaluationPosition | null>(null);
   const [isWhyDrawerOpen, setIsWhyDrawerOpen] = useState(false);
   const [isInjectorOpen, setIsInjectorOpen] = useState(false);
-  const [activeView, setActiveView] = useState<'analytics' | 'signals' | 'history'>('analytics');
 
   // Queries
   const { data: health } = useQuery({
@@ -45,6 +50,11 @@ export default function App() {
   const { data: summary } = useQuery({
     queryKey: ['portfolio-summary'],
     queryFn: fetchPortfolioSummary,
+  });
+
+  const { data: positions = [] } = useQuery({
+    queryKey: ['portfolio-positions'],
+    queryFn: fetchPositions,
   });
 
   const { data: initialSignals = [] } = useQuery({
@@ -64,12 +74,12 @@ export default function App() {
     });
 
   // SSE Streams
-  const { data: liveSignal, isConnected: sseSignalsConnected } = useEventSource<RiskSignal>(
+  const { data: liveSignal } = useEventSource<RiskSignal>(
     '/api/signals/stream',
     'SIGNAL'
   );
 
-  const { data: liveStress, isConnected: sseStressConnected } = useEventSource<StressResult>(
+  const { data: liveStress } = useEventSource<StressResult>(
     '/api/stress/stream',
     'STRESS_RUN'
   );
@@ -87,7 +97,7 @@ export default function App() {
   // Active displayed stress run (defaults to latest)
   const currentStressRun = selectedStress || stressHistory[0] || null;
 
-  // Threshold update mutation
+  // Mutations
   const thresholdMutation = useMutation({
     mutationFn: (newThreshold: number) =>
       updateThresholdConfig({ ...thresholdConfig, impactThreshold: newThreshold }),
@@ -96,7 +106,6 @@ export default function App() {
     },
   });
 
-  // Replay stream mutation
   const replayMutation = useMutation({
     mutationFn: triggerReplayStream,
     onSuccess: () => {
@@ -105,7 +114,6 @@ export default function App() {
     },
   });
 
-  // Manual inject mutation
   const injectMutation = useMutation({
     mutationFn: (payload: { headline: string; eventType?: string; impactScore?: number }) =>
       triggerManualStress(payload),
@@ -127,174 +135,113 @@ export default function App() {
     const matchingRun = stressHistory.find((r) => r.triggerSignalId === signal.signalId);
     if (matchingRun) {
       setSelectedStress(matchingRun);
-      setActiveView('analytics');
+      setActiveNav('stress-engine');
     } else {
       handleOpenWhyDrawer(currentStressRun);
     }
   };
 
-  const highSeverityAlertsCount = signalsList.filter(
-    (s) => s.impactScore >= thresholdConfig.impactThreshold
-  ).length;
+  const handleSync = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: ['portfolio-summary'] }),
+      queryClient.invalidateQueries({ queryKey: ['portfolio-positions'] }),
+      queryClient.invalidateQueries({ queryKey: ['signals'] }),
+      queryClient.invalidateQueries({ queryKey: ['stress-results'] }),
+      queryClient.invalidateQueries({ queryKey: ['health'] }),
+    ]);
+  };
 
   return (
-    <div className="min-h-screen pb-16">
-      {/* Top Navigation Bar */}
-      <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25">
-              <Shield className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-sm sm:text-base font-bold text-white tracking-wide">
-                  CRISIL & S&P GLOBAL RISK STRESS ENGINE
-                </h1>
-                <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                  MODULE B
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-400">
-                Real-Time NLP Signal Ingestion & Multi-Asset Revaluation
-              </p>
-            </div>
-          </div>
+    <div className="min-h-screen flex bg-[#070a0e] text-slate-100 font-sans antialiased">
+      {/* 1. Left Sidebar Navigation */}
+      <Sidebar
+        activeNav={activeNav}
+        onNavigate={(nav) => setActiveNav(nav)}
+        nlpStatus={health?.nlpSidecar}
+      />
 
-          <div className="flex items-center gap-2.5">
-            {/* Sidecar status indicator */}
-            <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs">
-              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-              <span className="text-slate-400 text-[11px]">NLP Engine:</span>
-              <span className="font-mono text-[11px] text-emerald-400 font-medium">
-                {health?.nlpSidecar || 'READY'}
-              </span>
-            </div>
-
-            <a
-              href="http://localhost:8080/swagger-ui.html"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-secondary text-xs flex items-center gap-1.5 py-1.5 px-2.5"
-            >
-              <Terminal className="w-3.5 h-3.5 text-slate-400" />
-              <span>Swagger UI</span>
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Container */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        {/* Header KPIs */}
-        <HeaderKpis
-          summary={summary}
-          latestStress={currentStressRun}
-          activeAlertsCount={highSeverityAlertsCount}
-          sseConnected={sseSignalsConnected || sseStressConnected}
+      {/* 2. Main Terminal Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto custom-scrollbar">
+        {/* Top Navbar */}
+        <TopNavbar
+          activeNav={activeNav}
+          onSync={handleSync}
+          onSimulateShock={() => setIsInjectorOpen(true)}
         />
 
-        {/* Dynamic Controls Bar */}
-        <ThresholdControl
-          config={thresholdConfig}
-          onChange={(newVal) => thresholdMutation.mutate(newVal)}
-          onReplay={() => replayMutation.mutate()}
-          onOpenInjector={() => setIsInjectorOpen(true)}
-          isReplaying={replayMutation.isPending}
-        />
+        {/* View Content */}
+        <main className="p-8 max-w-[1600px] w-full mx-auto">
+          {/* VIEW 1: Executive Dashboard (Reference Image 1) */}
+          {activeNav === 'executive' && (
+            <ExecutiveDashboardView
+              summary={summary}
+              signals={signalsList}
+              latestStress={currentStressRun}
+              threshold={thresholdConfig.impactThreshold}
+              onSimulateShock={(headline) => {
+                if (headline) {
+                  injectMutation.mutate({ headline });
+                } else {
+                  setIsInjectorOpen(true);
+                }
+              }}
+              onOpenStressEngine={() => setActiveNav('stress-engine')}
+            />
+          )}
 
-        {/* Clean View Tabs Controller (Declutters the entire dashboard!) */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-6">
-          <div className="flex items-center gap-2 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
-            <button
-              onClick={() => setActiveView('analytics')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                activeView === 'analytics'
-                  ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/25'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <BarChart2 className="w-3.5 h-3.5" />
-              <span>Stress Analytics & Holdings</span>
-            </button>
+          {/* VIEW 2: Portfolio Holdings (Reference Image 2) */}
+          {activeNav === 'holdings' && (
+            <PortfolioHoldingsView
+              summary={summary}
+              positions={positions}
+              onSimulateShock={() => setIsInjectorOpen(true)}
+              onResetDefault={handleSync}
+            />
+          )}
 
-            <button
-              onClick={() => setActiveView('signals')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                activeView === 'signals'
-                  ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/25'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <Radio className="w-3.5 h-3.5" />
-              <span>Live Risk Signals ({signalsList.length})</span>
-            </button>
-
-            <button
-              onClick={() => setActiveView('history')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                activeView === 'history'
-                  ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/25'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <History className="w-3.5 h-3.5" />
-              <span>Simulation History ({stressHistory.length})</span>
-            </button>
-          </div>
-
-          <div className="text-xs text-slate-400 font-mono hidden md:block">
-            {activeView === 'analytics' && 'Executive revaluation & exposure breakdown'}
-            {activeView === 'signals' && 'Real-time NLP signal feed with automated scoring'}
-            {activeView === 'history' && 'Chronological stress testing audit trail'}
-          </div>
-        </div>
-
-        {/* View 1: Analytics (Executive Workspace: 65% Stress Panel + 35% Quick Signals) */}
-        {activeView === 'analytics' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-8">
+          {/* VIEW 3: Portfolio Stress Engine */}
+          {activeNav === 'stress-engine' && (
+            <div className="space-y-6">
+              <ThresholdControl
+                config={thresholdConfig}
+                onChange={(newVal) => thresholdMutation.mutate(newVal)}
+                onReplay={() => replayMutation.mutate()}
+                onOpenInjector={() => setIsInjectorOpen(true)}
+                isReplaying={replayMutation.isPending}
+              />
               <StressPanel
                 latestStress={currentStressRun}
                 onOpenWhyDrawer={(stress, pos) => handleOpenWhyDrawer(stress, pos)}
               />
             </div>
+          )}
 
-            <div className="lg:col-span-4">
+          {/* VIEW 4: Dedicated Signal Stream */}
+          {activeNav === 'signals' && (
+            <div className="max-w-5xl mx-auto">
               <SignalFeed
                 signals={signalsList}
                 threshold={thresholdConfig.impactThreshold}
                 onSelectSignal={handleSelectSignal}
               />
             </div>
-          </div>
-        )}
+          )}
 
-        {/* View 2: Full-Width Real-Time Signals Feed */}
-        {activeView === 'signals' && (
-          <div className="max-w-4xl mx-auto">
-            <SignalFeed
-              signals={signalsList}
-              threshold={thresholdConfig.impactThreshold}
-              onSelectSignal={handleSelectSignal}
+          {/* VIEW 5: Audit History */}
+          {activeNav === 'history' && (
+            <StressHistoryTimeline
+              history={stressHistory}
+              onSelectRun={(run) => {
+                setSelectedStress(run);
+                setActiveNav('stress-engine');
+              }}
+              selectedResultId={currentStressRun?.resultId}
             />
-          </div>
-        )}
+          )}
+        </main>
+      </div>
 
-        {/* View 3: Full-Width Simulation History */}
-        {activeView === 'history' && (
-          <StressHistoryTimeline
-            history={stressHistory}
-            onSelectRun={(run) => {
-              setSelectedStress(run);
-              setActiveView('analytics');
-            }}
-            selectedResultId={currentStressRun?.resultId}
-          />
-        )}
-      </main>
-
-      {/* Modals & Drawers */}
+      {/* Global Modals & Drawers */}
       <WhyDrawer
         isOpen={isWhyDrawerOpen}
         onClose={() => setIsWhyDrawerOpen(false)}
@@ -307,7 +254,7 @@ export default function App() {
         onClose={() => setIsInjectorOpen(false)}
         onInject={async (headline: string) => {
           await injectMutation.mutateAsync({ headline });
-          setActiveView('analytics');
+          setActiveNav('stress-engine');
         }}
       />
     </div>

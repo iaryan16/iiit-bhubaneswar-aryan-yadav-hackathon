@@ -1,4 +1,4 @@
-import type { PortfolioSummary, RiskSignal, StressResult, ThresholdConfig } from '../types/risk';
+import type { PortfolioSummary, Position, RiskSignal, StressResult, ThresholdConfig } from '../types/risk';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
@@ -11,6 +11,12 @@ export async function fetchHealth(): Promise<{ status: string; nlpSidecar: strin
 export async function fetchPortfolioSummary(): Promise<PortfolioSummary> {
   const res = await fetch(`${API_BASE}/api/portfolio/summary`);
   if (!res.ok) throw new Error('Failed to fetch portfolio summary');
+  return res.json();
+}
+
+export async function fetchPositions(): Promise<Position[]> {
+  const res = await fetch(`${API_BASE}/api/portfolio/positions`);
+  if (!res.ok) throw new Error('Failed to fetch positions');
   return res.json();
 }
 

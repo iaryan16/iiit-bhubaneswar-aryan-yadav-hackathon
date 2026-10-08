@@ -80,9 +80,9 @@ export const StressPanel: React.FC<StressPanelProps> = ({
           {latestStress && (
             <button
               onClick={() => onOpenWhyDrawer(latestStress)}
-              className="btn-secondary text-xs flex items-center gap-1.5 text-blue-300 border-blue-500/30 hover:bg-blue-500/10"
+              className="btn-secondary text-xs flex items-center gap-1.5 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/10"
             >
-              <HelpCircle className="w-3.5 h-3.5 text-blue-400" />
+              <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
               <span>Explain Math</span>
             </button>
           )}
@@ -117,7 +117,7 @@ export const StressPanel: React.FC<StressPanelProps> = ({
               <div className="space-y-1">
                 <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden flex">
                   <div
-                    className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-500"
+                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
                     style={{ width: `${retainedPct}%` }}
                   />
                   <div
@@ -173,16 +173,16 @@ export const StressPanel: React.FC<StressPanelProps> = ({
       <div className="glass-panel p-5">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
           <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-blue-400" />
+            <Layers className="w-4 h-4 text-emerald-400" />
             <h3 className="text-sm font-semibold text-white">Loss Breakdown by Exposure ($ Millions)</h3>
           </div>
 
           {/* Slices Tabs */}
-          <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+          <div className="flex items-center gap-1 bg-[#090d16] p-1 rounded-lg border border-[#1a2333]">
             <button
               onClick={() => setActiveTab('assetClass')}
               className={`px-3 py-1 text-xs rounded transition-colors ${
-                activeTab === 'assetClass' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'assetClass' ? 'bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Asset Class
@@ -190,7 +190,7 @@ export const StressPanel: React.FC<StressPanelProps> = ({
             <button
               onClick={() => setActiveTab('sector')}
               className={`px-3 py-1 text-xs rounded transition-colors ${
-                activeTab === 'sector' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'sector' ? 'bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Sector
@@ -198,7 +198,7 @@ export const StressPanel: React.FC<StressPanelProps> = ({
             <button
               onClick={() => setActiveTab('region')}
               className={`px-3 py-1 text-xs rounded transition-colors ${
-                activeTab === 'region' ? 'bg-blue-600 text-white font-medium' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'region' ? 'bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Region
@@ -250,7 +250,7 @@ export const StressPanel: React.FC<StressPanelProps> = ({
           {topLossPositions.length > 5 && (
             <button
               onClick={() => setShowAllPositions(!showAllPositions)}
-              className="text-xs text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 transition-colors"
+              className="text-xs text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1 transition-colors"
             >
               <span>{showAllPositions ? 'Show top 5' : `Show all ${topLossPositions.length}`}</span>
               {showAllPositions ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -307,7 +307,7 @@ export const StressPanel: React.FC<StressPanelProps> = ({
                     <td className="py-2.5 px-3 text-center">
                       <button
                         onClick={() => onOpenWhyDrawer(latestStress, pos)}
-                        className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-blue-300 text-[10px] font-medium transition-colors"
+                        className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-emerald-300 text-[10px] font-medium transition-colors"
                       >
                         Why?
                       </button>

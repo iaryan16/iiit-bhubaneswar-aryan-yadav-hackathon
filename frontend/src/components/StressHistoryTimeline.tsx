@@ -53,8 +53,8 @@ export const StressHistoryTimeline: React.FC<StressHistoryTimelineProps> = ({
               <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} domain={['auto', 'auto']} label={{ value: '$B Value', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0f172a',
-                  borderColor: '#334155',
+                  backgroundColor: '#0a0e16',
+                  borderColor: '#1e293b',
                   borderRadius: '8px',
                   fontSize: '12px',
                   color: '#f8fafc',
@@ -64,10 +64,10 @@ export const StressHistoryTimeline: React.FC<StressHistoryTimelineProps> = ({
               <Line
                 type="monotone"
                 dataKey="value"
-                stroke="#38bdf8"
+                stroke="#10b981"
                 strokeWidth={2}
-                dot={{ r: 4, fill: '#0284c7' }}
-                activeDot={{ r: 6, fill: '#38bdf8' }}
+                dot={{ r: 4, fill: '#059669' }}
+                activeDot={{ r: 6, fill: '#34d399' }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -89,7 +89,7 @@ export const StressHistoryTimeline: React.FC<StressHistoryTimelineProps> = ({
                 onClick={() => onSelectRun(run)}
                 className={`p-3 rounded-lg border transition-all cursor-pointer flex items-center justify-between gap-3 text-xs ${
                   isSelected
-                    ? 'bg-blue-950/20 border-blue-500/50'
+                    ? 'bg-emerald-950/20 border-emerald-500/50'
                     : 'bg-slate-900/40 border-slate-800/60 hover:bg-slate-800/40'
                 }`}
               >
@@ -117,7 +117,7 @@ export const StressHistoryTimeline: React.FC<StressHistoryTimelineProps> = ({
                     <span>{run.deltaPercentage.toFixed(2)}%</span>
                   </div>
 
-                  <div className="text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium">
+                  <div className="text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-medium">
                     <span>Inspect</span>
                     <ArrowRight className="w-3 h-3" />
                   </div>

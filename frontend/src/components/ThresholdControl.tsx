@@ -22,9 +22,9 @@ export const ThresholdControl: React.FC<ThresholdControlProps> = ({
       {/* Left: Dynamic Threshold Slider */}
       <div className="flex items-center gap-4 flex-1 min-w-[280px]">
         <div className="flex items-center gap-2 text-slate-300 font-medium text-xs">
-          <Sliders className="w-4 h-4 text-blue-400" />
+          <Sliders className="w-4 h-4 text-emerald-400" />
           <span>Stress Trigger Level:</span>
-          <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 font-mono font-bold text-xs border border-blue-500/30">
+          <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono font-bold text-xs border border-emerald-500/30">
             ≥ {config.impactThreshold} / 10
           </span>
         </div>
@@ -36,7 +36,7 @@ export const ThresholdControl: React.FC<ThresholdControlProps> = ({
           step="1"
           value={config.impactThreshold}
           onChange={(e) => onChange(parseInt(e.target.value, 10))}
-          className="flex-1 max-w-[180px] h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500 border border-slate-700"
+          className="flex-1 max-w-[180px] h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 border border-slate-700"
         />
 
         {/* Quick presets */}
@@ -47,7 +47,7 @@ export const ThresholdControl: React.FC<ThresholdControlProps> = ({
               onClick={() => onChange(lvl)}
               className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
                 config.impactThreshold === lvl
-                  ? 'bg-blue-600 text-white font-bold'
+                  ? 'bg-emerald-500 text-slate-950 font-bold'
                   : 'bg-slate-800/80 text-slate-400 hover:text-slate-200'
               }`}
             >

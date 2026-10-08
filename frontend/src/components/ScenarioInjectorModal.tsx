@@ -72,8 +72,8 @@ export const ScenarioInjectorModal: React.FC<ScenarioInjectorModalProps> = ({
       <div className="relative w-full max-w-xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl p-6 text-slate-100">
         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
-              <BrainCircuit className="w-5 h-5 text-blue-400" />
+            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <BrainCircuit className="w-5 h-5 text-emerald-400" />
             </div>
             <div>
               <h2 className="text-base font-semibold text-white flex items-center gap-2">
@@ -110,7 +110,7 @@ export const ScenarioInjectorModal: React.FC<ScenarioInjectorModalProps> = ({
               rows={3}
               value={headline}
               onChange={(e) => setHeadline(e.target.value)}
-              className="w-full bg-slate-950/70 border border-slate-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/30 font-sans leading-relaxed"
+              className="w-full bg-[#090d16] border border-slate-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/30 font-sans leading-relaxed"
               placeholder="Type or paste any hypothetical headline (e.g. Geopolitical conflict escalates, Fed emergency rate hike, bank default...)"
               required
             />
@@ -129,7 +129,7 @@ export const ScenarioInjectorModal: React.FC<ScenarioInjectorModalProps> = ({
                   onClick={() => setHeadline(preset.text)}
                   className={`p-2.5 rounded-lg text-left border transition-all text-xs flex flex-col justify-between ${
                     headline === preset.text
-                      ? 'bg-blue-950/40 border-blue-500/50 text-blue-200 shadow-sm shadow-blue-500/20'
+                      ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-200 shadow-sm shadow-emerald-500/20'
                       : 'bg-slate-800/40 border-slate-800 text-slate-300 hover:bg-slate-800/80 hover:border-slate-700'
                   }`}
                 >
@@ -148,10 +148,10 @@ export const ScenarioInjectorModal: React.FC<ScenarioInjectorModalProps> = ({
           </div>
 
           {/* AI Autonomous Pipeline Info Card */}
-          <div className="p-3 rounded-xl bg-blue-950/20 border border-blue-500/20 flex items-start gap-2.5 text-xs text-slate-300">
-            <Sparkles className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+          <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/20 flex items-start gap-2.5 text-xs text-slate-300">
+            <Sparkles className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
             <div className="text-[11px] leading-relaxed">
-              <span className="text-blue-300 font-medium">Automatic Pipeline: </span>
+              <span className="text-emerald-300 font-medium">Automatic Pipeline: </span>
               Your input headline will be analyzed by FinBERT sentiment and BART zero-shot categorization. The engine will determine the event category, calculate severity (1–10), and shock all 200 portfolio positions with duration and credit migration revaluations.
             </div>
           </div>
@@ -168,7 +168,7 @@ export const ScenarioInjectorModal: React.FC<ScenarioInjectorModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting || !headline.trim()}
-              className="btn-primary flex items-center gap-2 text-xs shadow-lg shadow-blue-500/20"
+              className="btn-primary flex items-center gap-2 text-xs shadow-lg shadow-emerald-500/20"
             >
               <Play className="w-3.5 h-3.5" />
               <span>{isSubmitting ? 'Predicting Severity & Revaluing...' : 'Predict Severity & Revalue'}</span>

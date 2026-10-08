@@ -83,6 +83,32 @@ export interface StressResult {
   appliedShocksJson: string;
 }
 
+export interface Position {
+  positionId: string;
+  assetClass: string;
+  counterparty: string;
+  sector: string;
+  region: string;
+  currency: string;
+  notional: number;
+  marketValue: number;
+  coupon?: number | null;
+  modifiedDuration?: number | null;
+  convexity?: number | null;
+  rating?: string | null;
+  rateType?: string | null;
+  pd?: number | null;
+  lgd?: number | null;
+  dv01?: number | null;
+  payReceive?: string | null;
+  currencyPair?: string | null;
+  delta?: number | null;
+  ticker?: string | null;
+  shares?: number | null;
+  price?: number | null;
+  beta?: number | null;
+}
+
 export interface ThresholdConfig {
   impactThreshold: number;
   confidenceThreshold: number;
