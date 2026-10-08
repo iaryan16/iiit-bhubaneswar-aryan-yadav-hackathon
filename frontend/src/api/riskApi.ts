@@ -31,9 +31,10 @@ export async function fetchStressResults(): Promise<StressResult[]> {
 }
 
 export async function triggerManualStress(payload: {
-  eventType: string;
-  impactScore: number;
+  eventType?: string;
+  impactScore?: number;
   headline?: string;
+  text?: string;
 }): Promise<StressResult> {
   const res = await fetch(`${API_BASE}/api/stress/run`, {
     method: 'POST',
@@ -41,6 +42,16 @@ export async function triggerManualStress(payload: {
     body: JSON.stringify(payload),
   });
   if (!res.ok) throw new Error('Failed to execute manual stress run');
+  return res.json();
+}
+
+export async function analyzeHeadline(text: string): Promise<RiskSignal> {
+  const res = await fetch(`${API_BASE}/api/analyze`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) throw new Error('Failed to analyze headline');
   return res.json();
 }
 

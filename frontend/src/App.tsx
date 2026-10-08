@@ -22,7 +22,6 @@ import type {
   RiskSignal,
   StressResult,
   RevaluationPosition,
-  EventType,
 } from './types/risk';
 import { Shield, Sparkles, Terminal } from 'lucide-react';
 
@@ -107,11 +106,13 @@ export default function App() {
 
   // Manual inject mutation
   const injectMutation = useMutation({
-    mutationFn: (payload: { eventType: string; impactScore: number; headline: string }) =>
+    mutationFn: (payload: { headline: string; eventType?: string; impactScore?: number }) =>
       triggerManualStress(payload),
     onSuccess: (newRun) => {
       setSelectedStress(newRun);
       queryClient.invalidateQueries({ queryKey: ['stress-results'] });
+      queryClient.invalidateQueries({ queryKey: ['signals'] });
+      queryClient.invalidateQueries({ queryKey: ['portfolio-summary'] });
     },
   });
 
@@ -239,12 +240,8 @@ export default function App() {
       <ScenarioInjectorModal
         isOpen={isInjectorOpen}
         onClose={() => setIsInjectorOpen(false)}
-        onInject={async (type: EventType, score: number, headline: string) => {
-          await injectMutation.mutateAsync({
-            eventType: type,
-            impactScore: score,
-            headline,
-          });
+        onInject={async (headline: string) => {
+          await injectMutation.mutateAsync({ headline });
         }}
       />
     </div>

@@ -122,14 +122,65 @@ public class SignalService {
     }
 
     public RiskSignal processRawText(String text, String source) {
-        RawDoc doc = RawDoc.builder()
-                .id("manual-" + UUID.randomUUID())
-                .source(source != null ? source : "MANUAL")
-                .title(text)
-                .snippet(text)
-                .publishedAt(Instant.now())
+        return processManualScenario(text);
+    }
+
+    @Transactional
+    public RiskSignal processManualScenario(String headline) {
+        if (headline == null || headline.isBlank()) {
+            return null;
+        }
+
+        String cleanTitle = cleanText(headline);
+        // Do not block duplicate for manual injection
+        seenHeadlineHashes.add(computeHash(cleanTitle));
+
+        // 1. NLP Analysis (sidecar with Java fallback)
+        NlpAnalysisResult nlpResult = nlpClient.analyze(cleanTitle);
+
+        // 2. Entity Resolution
+        EntityMapper.EntityResolution resolution = entityMapper.resolve(nlpResult.getEntities());
+
+        // 3. Velocity check
+        Instant windowStart = Instant.now().minusSeconds(1800);
+        long recentCount = signalRepository.countByEventTypeAndTimestampAfter(nlpResult.getEventType(), windowStart);
+
+        // 4. Impact Scoring (AI predicted severity 1-10)
+        ImpactScorer.ImpactAssessment impact = impactScorer.score(
+                cleanTitle,
+                nlpResult.getEventType(),
+                nlpResult.getSentiment(),
+                nlpResult.getEntities(),
+                (int) recentCount
+        );
+
+        // 5. Build RiskSignal
+        RiskSignal signal = RiskSignal.builder()
+                .signalId(UUID.randomUUID().toString())
+                .timestamp(Instant.now())
+                .source("MANUAL_INJECTION")
+                .headline(cleanTitle)
+                .snippet(cleanTitle)
+                .sentimentScore(nlpResult.getSentiment())
+                .eventType(nlpResult.getEventType())
+                .eventConfidence(nlpResult.getEventConfidence())
+                .impactScore(impact.getImpactScore())
+                .region(resolution.getRegion())
+                .sector(resolution.getSector())
                 .build();
-        return processDoc(doc);
+
+        signal.setEntities(nlpResult.getEntities());
+        signal.setTickers(resolution.getTickers());
+        signal.setImpactRationale(impact.getRationale());
+
+        RiskSignal saved = signalRepository.save(signal);
+        log.info("Saved Manually Injected RiskSignal: [{}] {} (AI Predicted Impact: {})",
+                saved.getEventType(), saved.getHeadline(), saved.getImpactScore());
+
+        // 6. Broadcast to SSE stream for live feed
+        signalPublisher.publish(saved);
+
+        return saved;
     }
 
     public List<RiskSignal> findSignals(Integer minImpact, Instant since) {

@@ -28,39 +28,46 @@ public class FallbackAnalyzer {
         KEYWORD_RULES.put(EventType.GEOPOLITICAL, List.of(
                 "war", "military", "sanction", "sanctions", "conflict", "invasion", "troops",
                 "missile", "treaty", "nato", "taiwan", "ukraine", "russia", "middle east",
-                "iran", "israel", "strait of hormuz", "embargo", "blockade", "geopolitical"
+                "iran", "israel", "strait of hormuz", "embargo", "blockade", "geopolitical",
+                "strike", "strikes", "attack", "attacks", "tariff", "tariffs", "trade war",
+                "drone", "defense", "naval", "persian gulf", "red sea"
         ));
 
         KEYWORD_RULES.put(EventType.MACROECONOMIC, List.of(
                 "inflation", "cpi", "interest rate", "rate hike", "rate cut", "federal reserve",
                 "fed", "ecb", "central bank", "gdp", "recession", "unemployment", "yield curve",
-                "treasury yields", "stagflation", "monetary policy", "quantitative easing"
+                "treasury yields", "stagflation", "monetary policy", "quantitative easing",
+                "basis points", "bps", "liquidity", "yield", "rates", "dollar", "fx",
+                "oil price", "energy shock", "tightening"
         ));
 
         KEYWORD_RULES.put(EventType.CREDIT_EVENT, List.of(
                 "default", "bankruptcy", "credit downgrade", "debt restructuring", "insolvency",
                 "liquidation", "junk bond", "credit rating", "fitch", "moody", "s&p downgrade",
-                "missed payment", "chapter 11", "distressed debt", "evergrande"
+                "missed payment", "chapter 11", "distressed debt", "evergrande", "bailout",
+                "bank failure", "bank run", "svb", "credit crisis", "distress", "downgraded"
         ));
 
         KEYWORD_RULES.put(EventType.MERGER_ACQUISITION, List.of(
                 "merger", "acquisition", "acquire", "acquires", "buyout", "takeover",
-                "merges with", "all-stock deal", "tender offer", "m&a"
+                "merges with", "all-stock deal", "tender offer", "m&a", "deal"
         ));
 
         KEYWORD_RULES.put(EventType.PRODUCT_LAUNCH, List.of(
                 "launch", "unveil", "unveils", "announces new product", "flagship",
-                "rollout", "next-gen", "commercial availability", "debut"
+                "rollout", "next-gen", "commercial availability", "debut", "breakthrough"
         ));
 
         KEYWORD_RULES.put(EventType.REGULATORY, List.of(
                 "antitrust", "fine", "investigation", "sec probe", "doj", "regulator",
-                "compliance", "penalized", "gdpr", "ftc", "lawsuit"
+                "compliance", "penalized", "gdpr", "ftc", "lawsuit", "sanctioned", "probe",
+                "banned", "monopoly", "fraud"
         ));
 
         KEYWORD_RULES.put(EventType.NATURAL_DISASTER_OPERATIONAL, List.of(
                 "earthquake", "hurricane", "flood", "wildfire", "blackout", "cyberattack",
-                "ransomware", "system outage", "pipeline leak", "factory explosion", "tsunami"
+                "ransomware", "system outage", "pipeline leak", "factory explosion", "tsunami",
+                "outage", "grid", "fire", "typhoon", "catastrophe", "disruption"
         ));
 
         // Sentiment lexicon

@@ -48,33 +48,40 @@ EVENT_RULES = {
     "GEOPOLITICAL": [
         "war", "military", "sanction", "sanctions", "conflict", "invasion", "troops",
         "missile", "treaty", "nato", "taiwan", "ukraine", "russia", "middle east",
-        "iran", "israel", "strait of hormuz", "embargo", "blockade", "geopolitical"
+        "iran", "israel", "strait of hormuz", "embargo", "blockade", "geopolitical",
+        "strike", "strikes", "attack", "attacks", "tariff", "tariffs", "trade war",
+        "drone", "defense", "naval", "persian gulf", "red sea"
     ],
     "MACROECONOMIC": [
         "inflation", "cpi", "interest rate", "rate hike", "rate cut", "federal reserve",
         "fed", "ecb", "central bank", "gdp", "recession", "unemployment", "yield curve",
-        "treasury yields", "stagflation", "monetary policy", "quantitative easing"
+        "treasury yields", "stagflation", "monetary policy", "quantitative easing",
+        "basis points", "bps", "liquidity", "yield", "rates", "dollar", "fx",
+        "oil price", "energy shock", "tightening"
     ],
     "CREDIT_EVENT": [
         "default", "bankruptcy", "credit downgrade", "debt restructuring", "insolvency",
         "liquidation", "junk bond", "credit rating", "fitch", "moody", "s&p downgrade",
-        "missed payment", "chapter 11", "distressed debt"
+        "missed payment", "chapter 11", "distressed debt", "evergrande", "bailout",
+        "bank failure", "bank run", "svb", "credit crisis", "distress", "downgraded"
     ],
     "MERGER_ACQUISITION": [
         "merger", "acquisition", "acquire", "acquires", "buyout", "takeover",
-        "merges with", "all-stock deal", "tender offer", "m&a"
+        "merges with", "all-stock deal", "tender offer", "m&a", "deal"
     ],
     "PRODUCT_LAUNCH": [
         "launch", "unveil", "unveils", "announces new product", "flagship",
-        "rollout", "next-gen", "commercial availability", "debut"
+        "rollout", "next-gen", "commercial availability", "debut", "breakthrough"
     ],
     "REGULATORY": [
         "antitrust", "fine", "investigation", "sec probe", "doj", "regulator",
-        "compliance", "penalized", "gdpr", "ftc", "lawsuit", "sanctioned by authority"
+        "compliance", "penalized", "gdpr", "ftc", "lawsuit", "sanctioned by authority",
+        "sanctioned", "probe", "banned", "monopoly", "fraud"
     ],
     "NATURAL_DISASTER_OPERATIONAL": [
         "earthquake", "hurricane", "flood", "wildfire", "blackout", "cyberattack",
-        "ransomware", "system outage", "pipeline leak", "factory explosion", "tsunami"
+        "ransomware", "system outage", "pipeline leak", "factory explosion", "tsunami",
+        "outage", "grid", "fire", "typhoon", "catastrophe", "disruption"
     ]
 }
 
