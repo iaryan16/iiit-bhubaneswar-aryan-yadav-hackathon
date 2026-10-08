@@ -15,26 +15,28 @@ import java.util.Map;
 @Tag(name = "Health", description = "System and service connectivity health checks")
 public class HealthController {
 
-    @Autowired(required = false)
-    private WebClient nlpWebClient;
+    @org.springframework.beans.factory.annotation.Value("${app.nlp.service-url:http://localhost:8000}")
+    private String nlpServiceUrl;
 
     @GetMapping("/health")
     @Operation(summary = "Check backend and sidecar service health")
     public ResponseEntity<Map<String, Object>> health() {
         String nlpStatus = "STANDALONE_FALLBACK_READY";
-        if (nlpWebClient != null) {
-            try {
-                Map<?, ?> response = nlpWebClient.get()
-                        .uri("/health")
-                        .retrieve()
-                        .bodyToMono(Map.class)
-                        .block(java.time.Duration.ofMillis(800));
-                if (response != null && "UP".equalsIgnoreCase(String.valueOf(response.get("status")))) {
-                    nlpStatus = "CONNECTED";
-                }
-            } catch (Exception ignored) {
-                nlpStatus = "OFFLINE_FALLBACK_ACTIVE";
+        try {
+            var client = java.net.http.HttpClient.newBuilder()
+                    .connectTimeout(java.time.Duration.ofMillis(1500))
+                    .build();
+            var req = java.net.http.HttpRequest.newBuilder()
+                    .uri(java.net.URI.create(nlpServiceUrl + "/health"))
+                    .timeout(java.time.Duration.ofMillis(2000))
+                    .GET()
+                    .build();
+            var res = client.send(req, java.net.http.HttpResponse.BodyHandlers.ofString());
+            if (res.statusCode() == 200 && res.body().contains("\"status\":\"UP\"")) {
+                nlpStatus = "CONNECTED";
             }
+        } catch (Exception ignored) {
+            nlpStatus = "OFFLINE_FALLBACK_ACTIVE";
         }
 
         return ResponseEntity.ok(Map.of(
