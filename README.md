@@ -7,11 +7,10 @@
 [![FastAPI: 0.100+](https://img.shields.io/badge/FastAPI-0.100+-teal.svg)](https://fastapi.tiangolo.com/)
 [![Docker Compose](https://img.shields.io/badge/Docker-Compose%20v2-blue.svg)](https://www.docker.com/)
 
-**Candidate Name:** Solo Developer *(Update with your full name)*  
-**College Email ID:** candidate@college.ac.in *(Update with your college email)*  
-**College / Campus:** Your College Name *(Update with your institution)*  
-**Demo Video Link:** [YouTube (Unlisted) Video Walkthrough](https://youtu.be/placeholder-demo-link) *(Update with your unlisted video link)*  
-**Slide Deck Link (if hosted externally):** [docs/presentation.pdf](docs/presentation.pdf) | [docs/RiskEngine_Architecture_Summary_final.pptx](docs/RiskEngine_Architecture_Summary_final.pptx)  
+**Candidate Name:**   Aryan Yadav
+**College Email ID:** b324007@iiit-bh.ac.in 
+**College / Campus:** IIIT Bhubaneswar
+**Demo Video Link:**  
 
 ---
 
