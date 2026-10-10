@@ -1,0 +1,8 @@
+# RiskEngine Root Python Dependencies
+fastapi>=0.100.0
+uvicorn[standard]>=0.22.0
+pydantic>=2.0.0
+requests>=2.31.0
+numpy>=1.24.0
+pytest>=7.4.0
+python-pptx>=0.6.21

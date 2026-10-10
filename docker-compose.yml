@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   nlp-service:
     build:
-      context: ./nlp-service
+      context: src/nlp-service
       dockerfile: Dockerfile
     container_name: risk-nlp-sidecar
     ports:
@@ -12,7 +10,7 @@ services:
       - PORT=8000
       - PYTHONUNBUFFERED=1
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -20,11 +18,13 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: src/backend
       dockerfile: Dockerfile
     container_name: risk-backend
     ports:
       - "8080:8080"
+    volumes:
+      - ./data:/app/data:ro
     environment:
       - SERVER_PORT=8080
       - NLP_SERVICE_URL=http://nlp-service:8000
@@ -44,15 +44,19 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: src/frontend
       dockerfile: Dockerfile
     container_name: risk-frontend
     ports:
       - "5173:5173"
-    environment:
-      - VITE_API_BASE_URL=http://localhost:8080
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:5173/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     restart: unless-stopped
 
 networks:
