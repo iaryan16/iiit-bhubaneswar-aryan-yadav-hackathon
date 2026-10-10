@@ -33,9 +33,19 @@ When incoming risk spikes breach quantitative thresholds ($\text{Impact} \ge 7, 
 1. **Ingestion Layer:** Multi-source ingestors (GDELT DOC 2.0 API, NewsAPI, and CSV Replay Ingestor) normalize raw text, calculate SHA-256 deduplication hashes, and filter noise.
 2. **NLP Risk Intelligence Sidecar (`FastAPI :8000`):** Python microservice executing FinBERT sentiment polarity $P(\text{pos}) - P(\text{neg}) \in [-1.0, 1.0]$, rules-first + BART zero-shot event classification across 8 taxonomy categories, and spaCy named entity recognition (NER).
 3. **Java Fallback Analyzer (Zero-Downtime Resilience):** Embedded financial lexicon and keyword classifier in Spring Boot ensuring **100% offline uptime** even if the Python sidecar is down.
-4. **Transparent Impact Scorer:** Heuristic calculation clamped between 1 and 10 with full audit logging:
-   $$\text{Impact} = \text{clamp}\Big(\text{round}\big(\text{Base} + 2\cdot|\text{Sentiment}| + \text{Bonus}_{\text{kw}} + \text{Bonus}_{\text{velocity}} + \text{Bonus}_{\text{entity}}\big),\, 1,\, 10\Big)$$
-5. **Trigger Service & Debouncing:** Evaluates threshold triggers with a **30-minute rolling debouncing window** that suppresses duplicate noise while upgrading to higher-impact spikes.
+**4. Transparent Impact Scorer:** Calculates an event impact score using a deterministic, explainable heuristic, clamped to a range of 1–10. The score combines the base score with sentiment magnitude, keyword significance, event velocity, and entity relevance. Each contributing factor, intermediate calculation, and final score is recorded in an audit log for traceability.
+
+\[
+\begin{aligned}
+\text{Impact} = \operatorname{clamp}\Big(&\operatorname{round}(\text{Base} \\
+&+ 2 \cdot |\text{Sentiment}| \\
+&+ \text{Bonus}_{\text{kw}} \\
+&+ \text{Bonus}_{\text{velocity}} \\
+&+ \text{Bonus}_{\text{entity}}),\,1,\,10\Big)
+\end{aligned}
+\]
+
+**5. Trigger Service & Debouncing:** Evaluates impact scores against configurable risk thresholds and generates alerts when conditions are met. Implements a **30-minute rolling debouncing window** to suppress duplicate or repetitive alerts for the same event or entity while allowing higher-impact spikes to trigger immediate alert upgrades. Maintains an audit trail of trigger evaluations, suppressed alerts, score changes, and emitted notifications.
 6. **Multi-Asset Revaluation Engine:** Executes analytical pricing models across Bonds, Loans, Swaps, FX Forwards, and Equities.
 7. **Institutional React Dashboard (`React 18 + Vite + TS :5173`):** Server-Sent Events (SSE) live feed, Recharts Before vs After balance sheet contraction, loss slice breakdowns (Asset Class, Sector, Region), and "Why?" shock explanation drawer.
 
