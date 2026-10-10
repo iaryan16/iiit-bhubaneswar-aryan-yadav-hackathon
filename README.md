@@ -35,19 +35,18 @@ When incoming risk spikes breach quantitative thresholds ($\text{Impact} \ge 7, 
 3. **Java Fallback Analyzer (Zero-Downtime Resilience):** Embedded financial lexicon and keyword classifier in Spring Boot ensuring **100% offline uptime** even if the Python sidecar is down.
 ### 4. Transparent Impact Scorer
 Heuristic calculation clamped between 1 and 10 with full audit logging:
-
-**Impact Score Formula:**
 $$
-\begin{aligned}
-\text{Impact} = \operatorname{clamp}\Big(&\operatorname{round}(\text{Base} \\
-&+ 2 \cdot |\text{Sentiment}| \\
-&+ \text{Bonus}_{\text{kw}} \\
-&+ \text{Bonus}_{\text{velocity}} \\
-&+ \text{Bonus}_{\text{entity}}),\\
-&1, 10\Big)
-\end{aligned}
+\text{Impact} = \operatorname{clamp}\left(
+\operatorname{round}\left(
+\text{Base}
++ 2 \cdot |\text{Sentiment}|
++ \text{Bonus}_{\text{kw}}
++ \text{Bonus}_{\text{velocity}}
++ \text{Bonus}_{\text{entity}}
+\right),
+1, 10
+\right)
 $$
-
 ### 5. Trigger Service & Debouncing
 Evaluates threshold triggers with a **30-minute rolling debouncing window** that suppresses duplicate noise while upgrading to higher-impact spikes.
 
