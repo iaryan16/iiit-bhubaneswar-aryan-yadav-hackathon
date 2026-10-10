@@ -7,10 +7,10 @@
 [![FastAPI: 0.100+](https://img.shields.io/badge/FastAPI-0.100+-teal.svg)](https://fastapi.tiangolo.com/)
 [![Docker Compose](https://img.shields.io/badge/Docker-Compose%20v2-blue.svg)](https://www.docker.com/)
 
-**Candidate Name:**   Aryan Yadav
-**College Email ID:** b324007@iiit-bh.ac.in 
-**College / Campus:** IIIT Bhubaneswar
-**Demo Video Link:**  
+**Candidate Name:** Aryan Yadav<br>
+**College Email ID:** b324007@iiit-bh.ac.in<br>
+**College / Campus:** IIIT Bhubaneswar<br>
+**Demo Video Link:**
 
 ---
 
@@ -193,32 +193,6 @@ cd src/frontend && npm run build
 # 3. Python NLP benchmark tests (accuracy & entity extraction)
 python main.py --test
 ```
-
----
-
-## 8. Jury Q&A & Technical Defensibility
-
-1. **Why the Sidecar Architecture instead of monolithic Python or Java?**
-   - High-throughput risk engines require sub-millisecond thread concurrency and memory stability (Java/Spring Boot). Machine learning research thrives in Python (FinBERT, spaCy). Isolating ML into a stateless HTTP sidecar protects the core valuation transaction engine while allowing the embedded Java Fallback to provide 100% offline uptime if Python crashes.
-2. **How was Shock Calibration Derived?**
-   - Calibrated against historical empirical crisis events: 2008 Lehman credit spread widening, 2020 COVID equity drawdowns, and 2022 Fed rate hiking cycle.
-3. **Why Use a Deterministic Heuristic for Impact Scoring?**
-   - Financial regulators (Basel Committee, PRA, Fed SR 11-7) mandate model explainability. A black-box ML score cannot be defended to risk committees; our heuristic records every audit component in the signal log.
-4. **Recognized Limitations & Future Roadmap:**
-   - Shocks represent instantaneous static shocks. Future enhancements include dynamic copula cross-asset correlation matrices, multi-step counterparty contagion cascades, and options volatility surfaces.
-
----
-
-## 9. Submission Deliverables & Repository Structure Checklist
-
-| Deliverable | Required Location | Status | Description |
-|---|---|---|---|
-| **Source Code & Architecture** | Root & `/docs/architecture.png` | Complete | Spring Boot backend, FastAPI sidecar, React dashboard, and high-res architecture flow diagram |
-| **Presentation Deck** | [`/docs/presentation.pdf`](docs/presentation.pdf) | Complete | 7-slide presentation deck covering problem, architecture, models, results, and impact |
-| **Demo Video Walkthrough** | Link in README.md | Complete | 10-minute unlisted YouTube video walkthrough link format provided |
-| **Datasets & Schemas** | [`/data`](data/) folder | Complete | Synthetic $1.76B portfolio (200 positions), entity mappings, public equity benchmarks, and [`data/README.md`](data/README.md) |
-| **License** | [`LICENSE`](LICENSE) | Complete | Permissive Open Source MIT License |
-| **Dependencies** | [`requirements.txt`](requirements.txt) | Complete | Root Python requirements, Maven `pom.xml`, and npm `package.json` |
 
 ---
 
