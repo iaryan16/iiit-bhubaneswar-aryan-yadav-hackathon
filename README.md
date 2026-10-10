@@ -33,22 +33,14 @@ When incoming risk spikes breach quantitative thresholds ($\text{Impact} \ge 7, 
 1. **Ingestion Layer:** Multi-source ingestors (GDELT DOC 2.0 API, NewsAPI, and CSV Replay Ingestor) normalize raw text, calculate SHA-256 deduplication hashes, and filter noise.
 2. **NLP Risk Intelligence Sidecar (`FastAPI :8000`):** Python microservice executing FinBERT sentiment polarity $P(\text{pos}) - P(\text{neg}) \in [-1.0, 1.0]$, rules-first + BART zero-shot event classification across 8 taxonomy categories, and spaCy named entity recognition (NER).
 3. **Java Fallback Analyzer (Resilience):** Embedded financial lexicon and keyword classifier in Spring Boot ensuring **offline fallback analysis** even if the Python sidecar is down.
+4. **Multi-Asset Revaluation Engine:** Executes analytical pricing models across Bonds, Loans, Swaps, FX Forwards, and Equities.
+5. **Institutional React Dashboard (`React 18 + Vite + TS :5173`):** Server-Sent Events (SSE) live feed, Recharts Before vs After balance sheet contraction, loss slice breakdowns (Asset Class, Sector, Region), and "Why?" shock explanation drawer.
+
 ### 2.1 Transparent Impact Scorer
 Heuristic calculation clamped between 1 and 10 with full audit logging:
-$$
-\text{Impact}
-=
-\operatorname{clamp}\left(
-\operatorname{round}\left(
-\text{Base}
-+ 2\left|\text{Sentiment}\right|
-+ \text{Bonus}_{\text{kw}}
-+ \text{Bonus}_{\text{velocity}}
-+ \text{Bonus}_{\text{entity}}
-\right),
-1, 10
-\right)
-$$
+
+$$\text{Impact} = \operatorname{clamp}\left( \operatorname{round}\left( \text{Base} + 2\left\vert{}\text{Sentiment}\right\vert{} + \text{Bonus}_{\text{kw}} + \text{Bonus}_{\text{velocity}} + \text{Bonus}_{\text{entity}} \right), 1, 10 \right)$$
+
 ### 2.2 Trigger Service & Debouncing
 Evaluates threshold triggers with a **30-minute rolling debouncing window** that suppresses duplicate noise while upgrading to higher-impact spikes.
 
@@ -56,10 +48,9 @@ Evaluates threshold triggers with a **30-minute rolling debouncing window** that
 - **Duplicate Suppression:** Prevents repetitive notifications within the 30-minute debouncing window.
 - **Impact Escalation:** Allows higher-impact events to upgrade existing alerts instead of being suppressed.
 - **Audit Trail:** Records trigger evaluations, suppressed duplicates, impact upgrades, and emitted alerts for complete traceability.
-4. **Multi-Asset Revaluation Engine:** Executes analytical pricing models across Bonds, Loans, Swaps, FX Forwards, and Equities.
-5. **Institutional React Dashboard (`React 18 + Vite + TS :5173`):** Server-Sent Events (SSE) live feed, Recharts Before vs After balance sheet contraction, loss slice breakdowns (Asset Class, Sector, Region), and "Why?" shock explanation drawer.
 
-### Tech Stack & Runtime Specifications
+### 2.3 Tech Stack & Runtime Specifications
+
 | Layer | Technology | Version | Purpose |
 |---|---|---|---|
 | **Core Valuation Engine** | Java / Spring Boot 3 | Java 17 / 21, Spring Boot 3.3.4 | Core stress testing engine, JPA persistence, REST & SSE |
@@ -76,22 +67,22 @@ Evaluates threshold triggers with a **30-minute rolling debouncing window** that
 In strict compliance with hackathon guidelines, **no confidential or proprietary client data is used**. All datasets are synthetic or publicly sourced and reside entirely inside the [`/data`](data/) directory:
 
 1. **Synthetic Multi-Asset Trading Portfolio ([`data/portfolio.csv`](data/portfolio.csv)):**
-   - **Generation Seed:** Deterministic seed `42` (`scripts/generate_portfolio.py`).
-   - **Total Positions:** 200 multi-asset instruments.
-   - **Total Market Value:** **$1,759,091,843.29** (~$1.76 Billion, matching the $1B–$2B trading book mandate).
-   - **Asset Composition:**
-     - **Bonds (50):** Corporate and sovereign bonds with fixed coupons ($2.5\% - 6.5\%$), modified duration ($3.5\text{y} - 9.5\text{y}$), convexity ($25 - 85$), and credit ratings (`AAA` to `B`).
-     - **Loans (50):** Commercial and syndicated loans with baseline PDs ($0.05\% - 8.5\%$) and LGDs ($35\% - 50\%$).
-     - **Derivatives (50):** 25 Interest Rate Swaps (DV01 $\$5,000 - \$45,000/\text{bp}$, Pay-Fixed vs Receive-Fixed) and 25 FX Forwards (`USDEUR`, `USDINR`, `USDGBP`, `USDJPY` with delta sensitivities).
-     - **Equities (50):** Sector-classified equities across Technology, Financials, Energy, Healthcare, and Industrials with betas ($0.54 - 2.10$).
+    - **Generation Seed:** Deterministic seed `42` (`scripts/generate_portfolio.py`).
+    - **Total Positions:** 200 multi-asset instruments.
+    - **Total Market Value:** **$1,759,091,843.29** (~$1.76 Billion, matching the $1B–$2B trading book mandate).
+    - **Asset Composition:**
+        - **Bonds (50):** Corporate and sovereign bonds with fixed coupons ($2.5\% - 6.5\%$), modified duration ($3.5\text{y} - 9.5\text{y}$), convexity ($25 - 85$), and credit ratings (`AAA` to `B`).
+        - **Loans (50):** Commercial and syndicated loans with baseline PDs ($0.05\% - 8.5\%$) and LGDs ($35\% - 50\%$).
+        - **Derivatives (50):** 25 Interest Rate Swaps (DV01 $\$5,000 - \$45,000/\text{bp}$, Pay-Fixed vs Receive-Fixed) and 25 FX Forwards (`USDEUR`, `USDINR`, `USDGBP`, `USDJPY` with delta sensitivities).
+        - **Equities (50):** Sector-classified equities across Technology, Financials, Energy, Healthcare, and Industrials with betas ($0.54 - 2.10$).
 2. **Counterparty & Entity Map ([`data/entity_map.csv`](data/entity_map.csv)):**
-   - Reference institutions (e.g., Barclays, Deutsche Bank, BNP Paribas, UBS, Goldman Sachs) mapped to systemic weights and credit ratings.
+    - Reference institutions (e.g., Barclays, Deutsche Bank, BNP Paribas, UBS, Goldman Sachs) mapped to systemic weights and credit ratings.
 3. **Public Equity Benchmarks ([`data/cached_equities.csv`](data/cached_equities.csv)):**
-   - Baseline prices and calculated 3-year weekly betas from public equities.
+    - Baseline prices and calculated 3-year weekly betas from public equities.
 4. **Benchmark Feeds ([`data/raw_samples/`](data/raw_samples/)):**
-   - Sample news headlines and tweet streams across the 8 event risk taxonomy classes.
+    - Sample news headlines and tweet streams across the 8 event risk taxonomy classes.
 5. **Assumptions & Boundaries:**
-   - Shocks represent instantaneous static balance sheet revaluations prior to secondary hedging. Full details are documented in [`data/README.md`](data/README.md).
+    - Shocks represent instantaneous static balance sheet revaluations prior to secondary hedging. Full details are documented in [`data/README.md`](data/README.md).
 
 ---
 
@@ -161,12 +152,12 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 ### Prototype Outputs & Deliverables
 1. **Low-Latency Execution:** Revalues the entire 200-position, **$1.76 billion** portfolio in **under 15 milliseconds**, as measured in the prototype.
 2. **NLP Classification Accuracy:** Reported **90–95% accuracy** for the Python sidecar and **100% accuracy** for the Java fallback on the project's labeled financial benchmark headlines.
-3. **Monotonicity & Mathematical Rigor:** Validated that higher severity signals strictly produce greater portfolio drawdowns ($\text{Loss}_{10} > \text{Loss}_8 > \text{Loss}_6$). Analytical calculations match hand-computed financial benchmarks to $0.0001 precision.
+3. **Monotonicity & Mathematical Rigor:** Validated that higher severity signals strictly produce greater portfolio drawdowns ($\text{Loss}_{10} > \text{Loss}_8 > \text{Loss}_6$). Analytical calculations match hand-computed financial benchmarks to a precision of $0.0001.
 4. **Stress Scenario Verification (`GEOPOLITICAL, 9`):**
-   - **Baseline Portfolio Value:** **$1,759,091,843.29** (~$1.76B)
-   - **Stressed Portfolio Value:** **$1,564,723,314.19** (~$1.56B)
-   - **Net Portfolio Drawdown:** **-$194,368,529.10 (-11.05%)**
-   - **Credit Expected Loss Migration:** Stressed loan expected loss increases from **$14.06M to $28.13M** (+$14.06M credit risk increase due to spread widening and rating downgrade surcharges).
+    - **Baseline Portfolio Value:** **$1,759,091,843.29** (~$1.76B)
+    - **Stressed Portfolio Value:** **$1,564,723,314.19** (~$1.56B)
+    - **Net Portfolio Drawdown:** **-$194,368,529.10 (-11.05%)**
+    - **Credit Expected Loss Migration:** Stressed loan expected loss increases from **$14.06M to $28.13M** (+$14.06M credit risk increase due to spread widening and rating downgrade surcharges).
 
 ### Domain & Business Impact
 - **Proactive vs. Reactive Risk Mitigation:** Demonstrates a move from retrospective reporting toward event-driven shock alerting.
@@ -182,12 +173,12 @@ $$s = \min\left(\frac{\text{Impact}}{8.0},\, 1.5\right)$$
 
 #### Bonds — Duration and Convexity Taylor Expansion
 $$\frac{\Delta P}{P} = -D \cdot \Delta y + \frac{1}{2} C \cdot (\Delta y)^2 - D \cdot \Delta \text{spread}$$
-Where $D$ is modified duration, $C$ is convexity, $\Delta y$ is benchmark yield shift, and $\Delta \text{spread}$ is credit spread widening.
+*Where $D$ is modified duration, $C$ is convexity, $\Delta y$ is benchmark yield shift, and $\Delta \text{spread}$ is credit spread widening.*
 
 #### Loans — Spread Mark-to-Market and Credit-Migration Expected Loss
 $$\Delta \text{MTM} = -D \cdot \Delta \text{spread} \cdot V_{\text{base}}$$
 $$\text{EL}_{\text{stressed}} = \text{PD}_{\text{stressed}} \times \text{LGD} \times \text{EAD}$$
-*(High severity signals with $\text{Impact} \ge 8$ apply a 1-notch rating migration surcharge of $+25\%$ PD)*.
+*(High severity signals with $\text{Impact} \ge 8$ apply a 1-notch rating migration surcharge of $+25\%$ PD).*
 
 #### Derivatives
 - **Interest Rate Swaps:**
@@ -197,7 +188,7 @@ $$\text{EL}_{\text{stressed}} = \text{PD}_{\text{stressed}} \times \text{LGD} \t
 
 #### Equities — CAPM Beta with Scenario Sector Overrides
 $$\Delta V = V_{\text{base}} \times (\text{Shock}_{\text{sector}} \times \beta)$$
-Sector overrides dynamically decouple asset classes (e.g., during Geopolitical shocks: Energy $+5\%$, Tech $-10\%$, Airlines $-20\%$).
+*Sector overrides dynamically decouple asset classes (e.g., during Geopolitical shocks: Energy $+5\%$, Tech $-10\%$, Airlines $-20\%$).*
 
 ---
 
