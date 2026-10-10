@@ -196,6 +196,6 @@ python main.py --test
 
 ---
 
-## 10. License
+## 8. License
 
 This project is open-source under the [MIT License](LICENSE).
