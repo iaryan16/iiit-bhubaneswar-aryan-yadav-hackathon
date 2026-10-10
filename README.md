@@ -10,7 +10,7 @@
 **Candidate Name:** Aryan Yadav  
 **College Email ID:** b324007@iiit-bh.ac.in  
 **College / Campus:** IIIT Bhubaneswar  
-**Demo Video Link:** _Add demo URL here_
+**Demo Video Link:** https://youtu.be/j9FgNW620a4
 
 ---
 
